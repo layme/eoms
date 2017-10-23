@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.FaBzggBfzsbDao">
+    <resultMap id="FaBzggBfzsbResultMap" type="com.gwssi.eoms.model.domain.produce.gonggao.FaBzggBfzsb">
+        <id column="fa_bzgg_bfzsb_id" property="fa_bzgg_bfzsb_id" jdbcType="VARCHAR"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="zhuanlilx" property="zhuanlilx" jdbcType="VARCHAR"/>
+        <result column="juanqih" property="juanqih" jdbcType="VARCHAR"/>
+        <result column="gonggaor" property="gonggaor" jdbcType="VARCHAR"/>
+        <result column="bandengfwr" property="bandengfwr" jdbcType="VARCHAR"/>
+        <result column="niandengyfjnr" property="niandengyfjnr" jdbcType="VARCHAR"/>
+        <result column="fenleiwcbj" property="fenleiwcbj" jdbcType="VARCHAR"/>
+        <result column="shifouwtaj" property="shifouwtaj" jdbcType="VARCHAR"/>
+        <result column="zhuanzhengc" property="zhuanzhengc" jdbcType="VARCHAR"/>
+        <result column="jiaoduizt" property="jiaoduizt" jdbcType="VARCHAR"/>
+        <result column="tidangczy" property="tidangczy" jdbcType="VARCHAR"/>
+        <result column="caozuosj" property="caozuosj" jdbcType="VARCHAR"/>
+        <result column="zhengshuh" property="zhengshuh" jdbcType="VARCHAR"/>
+        <result column="fazhengr" property="fazhengr" jdbcType="VARCHAR"/>
+        <result column="zhuanlih" property="zhuanlih" jdbcType="VARCHAR"/>
+        <result column="zhengshuysmjid" property="zhengshuysmjid" jdbcType="VARCHAR"/>
+        <result column="zhengshuyys" property="zhengshuyys" jdbcType="VARCHAR"/>
+        <result column="wenjiancflj" property="wenjiancflj" jdbcType="VARCHAR"/>
+        <result column="tuxingwjcflj" property="tuxingwjcflj" jdbcType="VARCHAR"/>
+        <result column="zhengshuyscsj" property="zhengshuyscsj" jdbcType="VARCHAR"/>
+        <result column="fawenxlh" property="fawenxlh" jdbcType="VARCHAR"/>
+        <result column="dailijgdm" property="dailijgdm" jdbcType="VARCHAR"/>
+        <result column="shoujianrxm" property="shoujianrxm" jdbcType="VARCHAR"/>
+        <result column="shoujianrdz" property="shoujianrdz" jdbcType="VARCHAR"/>
+        <result column="shoujianryzbm" property="shoujianryzbm" jdbcType="VARCHAR"/>
+        <result column="zhengshuzt" property="zhengshuzt" jdbcType="VARCHAR"/>
+        <result column="shenchaydm" property="shenchaydm" jdbcType="VARCHAR"/>
+        <result column="shenchabm" property="shenchabm" jdbcType="VARCHAR"/>
+        <result column="shenchacsdm" property="shenchacsdm" jdbcType="VARCHAR"/>
+        <result column="banzhengqrsj" property="banzhengqrsj" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+        <result column="rukuzt" property="rukuzt" jdbcType="VARCHAR"/>
+        <result column="shouniannd" property="shouniannd" jdbcType="VARCHAR"/>
+        <result column="shouquanr" property="shouquanr" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getFaBzggBfzsbByShenqingh" resultMap="FaBzggBfzsbResultMap" parameterType="java.lang.String">
+        select *
+        from fa_bzgg_bfzsb
+        where shenqingh = #{shenqingh}
+    </select>
+
+</mapper>
