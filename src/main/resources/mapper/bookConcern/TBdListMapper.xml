@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.bookConcern.TBdListDao">
+    <resultMap id="TBdListResultMap" type="com.gwssi.eoms.model.domain.bookConcern.TBdList">
+        <result column="pubtype" property="pubtype" jdbcType="VARCHAR"/>
+        <result column="an" property="an" jdbcType="VARCHAR"/>
+        <result column="gbdsendtime" property="gbdsendtime" jdbcType="VARCHAR"/>
+        <result column="gbdgettime" property="gbdgettime" jdbcType="VARCHAR"/>
+        <result column="zlxmsendtime" property="zlxmsendtime" jdbcType="VARCHAR"/>
+        <result column="zlxmgettime" property="zlxmgettime" jdbcType="VARCHAR"/>
+        <result column="bdresult" property="bdresult" jdbcType="DOUBLE"/>
+        <result column="zlxmgetresult" property="zlxmgetresult" jdbcType="DOUBLE"/>
+        <result column="gbdgetresult" property="gbdgetresult" jdbcType="DOUBLE"/>
+        <result column="isfast" property="isfast" jdbcType="DOUBLE"/>
+        <result column="bddate" property="bddate" jdbcType="VARCHAR"/>
+        <result column="sendername" property="sendername" jdbcType="VARCHAR"/>
+        <result column="istesting" property="istesting" jdbcType="DOUBLE"/>
+        <result column="pflag" property="pflag" jdbcType="DOUBLE"/>
+        <result column="islunxun" property="islunxun" jdbcType="DOUBLE"/>
+    </resultMap>
+
+        <select id="getByShenqingh" resultMap="TBdListResultMap" parameterType="java.lang.String">
+            select *
+            from t_pub_list
+            where an = #{shenqingh}
+        </select>
+</mapper>

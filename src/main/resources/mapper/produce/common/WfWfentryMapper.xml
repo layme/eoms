@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.WfWfentryDao">
+    <resultMap id="WfWfentryResultMap" type="com.gwssi.eoms.model.domain.produce.common.WfWfentry">
+        <id column="id" property="id" jdbcType="DOUBLE"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="DOUBLE"/>
+        <result column="parent_id" property="parent_id" jdbcType="DOUBLE"/>
+        <result column="sub_workflow_id" property="sub_workflow_id" jdbcType="VARCHAR"/>
+        <result column="instance_id" property="instance_id" jdbcType="DOUBLE"/>
+        <result column="main_id" property="main_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getFaBzggBfzsbByShenqingh" resultMap="WfWfentryResultMap" parameterType="java.lang.String">
+        select *
+        from fa_bzgg_bfzsb
+        where shenqingh = #{shenqingh}
+    </select>
+
+</mapper>

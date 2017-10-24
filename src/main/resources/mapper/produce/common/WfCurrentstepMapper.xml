@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.WfCurrentstepDao">
+    <resultMap id="WfCurrentstepResultMap" type="com.gwssi.eoms.model.domain.produce.common.WfCurrentstep">
+        <id column="id" property="id" jdbcType="DOUBLE"/>
+        <result column="entry_id" property="entry_id" jdbcType="DOUBLE"/>
+        <result column="step_id" property="step_id" jdbcType="VARCHAR"/>
+        <result column="action_id" property="action_id" jdbcType="VARCHAR"/>
+        <result column="owner" property="owner" jdbcType="VARCHAR"/>
+        <result column="start_date" property="start_date" jdbcType="VARCHAR"/>
+        <result column="finish_date" property="finish_date" jdbcType="VARCHAR"/>
+        <result column="due_date" property="due_date" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="caller" property="caller" jdbcType="VARCHAR"/>
+        <result column="previous_id" property="previous_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getByShenqingh" resultMap="WfCurrentstepResultMap" parameterType="java.lang.String">
+        select *
+        from fa_bzgg_bfzsb
+        where shenqingh = #{shenqingh}
+    </select>
+
+</mapper>

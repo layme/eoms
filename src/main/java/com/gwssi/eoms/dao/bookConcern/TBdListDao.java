@@ -1,6 +1,6 @@
 package com.gwssi.eoms.dao.bookConcern;
 
-import com.gwssi.eoms.model.domain.bookConcern.TPubList;
+import com.gwssi.eoms.model.domain.bookConcern.TBdList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Param;
  * Created by admin on 2017/10/23.
  */
 @Mapper
-public interface TPubListDao {
-    TPubList getByShenqingh(@Param("shenqingh") String shenqingh);
+public interface TBdListDao {
+    TBdList getByShenqingh(@Param("shenqingh") String shenqingh);
 }

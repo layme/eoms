@@ -1,4 +1,4 @@
-package com.gwssi.eoms.model.domain.produce.gongzuoliu;
+package com.gwssi.eoms.model.domain.produce.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WfCurrentstep {
-    private String id;  // 主键
-    private String entry_id;  // 工作流ID
+    private Double id;  // 主键
+    private Double entry_id;  // 工作流ID
     private String step_id;  // 步骤ID
     private String action_id;  // 动作ID
     private String owner;  // 所有者

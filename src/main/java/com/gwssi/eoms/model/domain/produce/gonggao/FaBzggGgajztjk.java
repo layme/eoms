@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FaBzggGgajztjk {
-    private String fa_bzgg_ggajztjk_id;  // 主键
+    private Double fa_bzgg_ggajztjk_id;  // 主键
     private String shenqingh;  // 申请号
     private String zhuanlilx;  // 专利类型
     private String shenqingr;  // 申请日
@@ -35,39 +35,8 @@ public class FaBzggGgajztjk {
     private String shishenyxm;  // 实审员姓名
     private String chushenybm;  // 初审员部门
     private String shishenybm;  // 实审员部门
-    private String regname;  // 注册人员
+    private String regname;  // 注册人
     private String regtime;  // 注册时间
-    private String modname;  // 修改人员
+    private String modname;  // 修改人
     private String modtime;  // 修改时间
-
-    @Override
-    public String toString() {
-        return "{fa_bzgg_ggajztjk_id = " + fa_bzgg_ggajztjk_id +
-                ", shenqingh = " + shenqingh +
-                ", zhuanlilx = " + zhuanlilx +
-                ", shenqingr = " + shenqingr +
-                ", gonggaozt = " + gonggaozt +
-                ", yuguggr = " + yuguggr +
-                ", gonggaor = " + gonggaor +
-                ", zhufenleih = " + zhufenleih +
-                ", bandengfwr = " + bandengfwr +
-                ", jinrujycsj = " + jinrujycsj +
-                ", jiaoyanwcsj = " + jiaoyanwcsj +
-                ", jiaoyanwcbj = " + jiaoyanwcbj +
-                ", jinruggcsj = " + jinruggcsj +
-                ", gonggaowcsj = " + gonggaowcsj +
-                ", gonggaowcbj = " + gonggaowcbj +
-                ", fenleiwcsj = " + fenleiwcsj +
-                ", fenleiwcbj = " + fenleiwcbj +
-                ", niandengyfjnr = " + niandengyfjnr +
-                ", shifangtzsfwr = " + shifangtzsfwr +
-                ", chushenyxm = " + chushenyxm +
-                ", shishenyxm = " + shishenyxm +
-                ", chushenybm = " + chushenybm +
-                ", shishenybm = " + shishenybm +
-                ", regname = " + regname +
-                ", regtime = " + regtime +
-                ", modname = " + modname +
-                ", modtime = " + modtime + "}";
-    }
 }

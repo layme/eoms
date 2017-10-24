@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gwssi.eoms.dao.produce.gonggao.FaBzggBfzsbDao">
-    <resultMap id="FaBzggBfzsbResultMap" type="com.gwssi.eoms.model.domain.produce.gonggao.FaBzggBfzsb">
-        <id column="fa_bzgg_bfzsb_id" property="fa_bzgg_bfzsb_id" jdbcType="DOUBLE"/>
+<mapper namespace="com.gwssi.eoms.dao.produce.gonggao.FaBzggZsglbDao">
+    <resultMap id="FaBzggZsglbResultMap" type="com.gwssi.eoms.model.domain.produce.gonggao.FaBzggZsglb">
+        <id column="fa_bzgg_zsglb_id" property="fa_bzgg_zsglb_id" jdbcType="DOUBLE"/>
         <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
         <result column="zhuanlilx" property="zhuanlilx" jdbcType="VARCHAR"/>
         <result column="juanqih" property="juanqih" jdbcType="VARCHAR"/>
@@ -37,14 +37,23 @@
         <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
         <result column="modname" property="modname" jdbcType="VARCHAR"/>
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
-        <result column="rukuzt" property="rukuzt" jdbcType="VARCHAR"/>
         <result column="shouniannd" property="shouniannd" jdbcType="VARCHAR"/>
-        <result column="shouquanr" property="shouquanr" jdbcType="VARCHAR"/>
+        <result column="fa_bzgg_ggajztjk_id" property="fa_bzgg_ggajztjk_id" jdbcType="DOUBLE"/>
+        <result column="shenqingr" property="shenqingr" jdbcType="VARCHAR"/>
+        <result column="gonggaozt" property="gonggaozt" jdbcType="VARCHAR"/>
+        <result column="yuguggr" property="yuguggr" jdbcType="VARCHAR"/>
+        <result column="jinruggsj" property="jinruggsj" jdbcType="VARCHAR"/>
+        <result column="shifoutgjy" property="shifoutgjy" jdbcType="VARCHAR"/>
+        <result column="shujuxgbj" property="shujuxgbj" jdbcType="VARCHAR"/>
+        <result column="zhuluxmtqsj" property="zhuluxmtqsj" jdbcType="VARCHAR"/>
+        <result column="gongbaodtqbj" property="gongbaodtqbj" jdbcType="VARCHAR"/>
+        <result column="zhuluxmtqbj" property="zhuluxmtqbj" jdbcType="VARCHAR"/>
+        <result column="gongbaodtqwcsj" property="gongbaodtqwcsj" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaBzggBfzsbResultMap" parameterType="java.lang.String">
+    <select id="getByShenqingh" resultMap="FaBzggZsglbResultMap" parameterType="java.lang.String">
         select *
-        from fa_bzgg_bfzsb
+        from fa_bzgg_zsglb
         where shenqingh = #{shenqingh}
     </select>
 

@@ -1,7 +1,7 @@
 package com.gwssi.eoms.service.impl;
 
 import com.gwssi.eoms.dao.bookConcern.TPubListDao;
-import com.gwssi.eoms.dao.produce.FaBzggBfzsbDao;
+import com.gwssi.eoms.dao.produce.gonggao.FaBzggBfzsbDao;
 import com.gwssi.eoms.model.domain.produce.gonggao.FaBzggBfzsb;
 import com.gwssi.eoms.service.FaBzggBfzsbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,7 @@ public class FaBzggBfzsbServiceImpl implements FaBzggBfzsbService {
     TPubListDao tPubListDao;
 
     @Override
-    public FaBzggBfzsb getFaBzggBfzsbByShenqingh(String shenqingh) {
-        System.out.println(tPubListDao.getTPubListByShenqingh(shenqingh).toString());
-        return faBzggBfzsbDao.getFaBzggBfzsbByShenqingh(shenqingh);
+    public FaBzggBfzsb getByShenqingh(String shenqingh) {
+        return faBzggBfzsbDao.getByShenqingh(shenqingh);
     }
 }

@@ -1,5 +1,6 @@
 package com.gwssi.eoms.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,12 +19,12 @@ public class DataSourceConfig {
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource.produce")  // 生产数据源
     public DataSource dataSourceProduce() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 
     @Bean(name = "bookConcern")
     @ConfigurationProperties(prefix = "spring.datasource.bookConcern")  // 出版社数据源
     public DataSource dataSourceBookConcern() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 }

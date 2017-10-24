@@ -1,4 +1,4 @@
-package com.gwssi.eoms.dao.produce;
+package com.gwssi.eoms.dao.produce.gonggao;
 
 import com.gwssi.eoms.model.domain.produce.gonggao.FaBzggBfzsb;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface FaBzggBfzsbDao {
-    FaBzggBfzsb getFaBzggBfzsbByShenqingh(@Param("shenqingh") String shenqingh);
+    FaBzggBfzsb getByShenqingh(@Param("shenqingh") String shenqingh);
 }

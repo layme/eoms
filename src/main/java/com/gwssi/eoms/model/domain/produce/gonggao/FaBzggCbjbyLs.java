@@ -5,31 +5,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 待公告案件表
+ * 公告校验历史表_2
  * Created by admin on 2017/10/23.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FaBzggDggajb {
-    private Double fa_bzgg_dggajb_id;  // 主键
+public class FaBzggCbjbyLs {
+    private Double fa_bzgg_cbjyb_ls_id;  // 主键
     private Double fa_bzgg_ggajztjk_id;  // 公告案件状态监控表主键
     private String shenqingr;  // 申请日
     private String shenqingh;  // 申请号
     private String zhuanlilx;  // 专利类型
-    private String yuguggr;  // 预估公告日
-    private String gonggaozt;  // 公告状态
     private String zhufenleih;  // 主分类号
-    private String shifoutgjy;  // 是否跳过校验
+    private String gonggaozt;  // 公告状态
+    private String yuguggr;  // 预估公告日
     private String bandengfwr;  // 办登发文日
-    private String jinrujycsj;  // 进入检验处时间
-    private String jiaoduijlwcsj;  // 校对结论完成时间
+    private String jinrujycsj;  // 进入校验时间
     private String songfenlsj;  // 送分类时间
     private String fenleiwcsj;  // 分类完成时间
     private String fenleiwcbj;  // 分类完成标记
-    private String weiyongwjxx;  // 未用文件信息
-    private String weiyongfyxx;  // 未用费用信息
-    private String qitaycxx;  // 其他异常信息
+    private String zhuluxmtqbj;  // 著录项目提取标记
+    private String zhuluxmtqwcsj;  // 著录项目提取完成时间
+    private String gongbaodtqbj;  // 公报袋提取标记
+    private String gongbaodtqwcsj;  // 公报袋提取完成时间
+    private String jiaoduijl;  // 校对结论
+    private String jiaoduijgfhsj;  // 校对结论返回时间
+    private String zhuanlssj;  // 转历史时间
     private String regname;  // 注册人
     private String regtime;  // 注册时间
     private String modname;  // 修改人

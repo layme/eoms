@@ -10,21 +10,21 @@
         <result column="pubtype" property="pubtype" jdbcType="VARCHAR"/>
         <result column="an" property="an" jdbcType="VARCHAR"/>
         <result column="pubdate" property="pubdate" jdbcType="VARCHAR"/>
-        <result column="issingle" property="issingle" jdbcType="VARCHAR"/>
-        <result column="zlxmmodify" property="zlxmmodify" jdbcType="VARCHAR"/>
-        <result column="xmlmodify" property="xmlmodify" jdbcType="VARCHAR"/>
-        <result column="predo" property="predo" jdbcType="VARCHAR"/>
+        <result column="issingle" property="issingle" jdbcType="DOUBLE"/>
+        <result column="zlxmmodify" property="zlxmmodify" jdbcType="DOUBLE"/>
+        <result column="xmlmodify" property="xmlmodify" jdbcType="DOUBLE"/>
+        <result column="predo" property="predo" jdbcType="DOUBLE"/>
         <result column="gbdsendtime" property="gbdsendtime" jdbcType="VARCHAR"/>
         <result column="gbdgettime" property="gbdgettime" jdbcType="VARCHAR"/>
         <result column="zlxmsendtim" property="zlxmsendtime" jdbcType="VARCHAR"/>
         <result column="zlxmgettime" property="zlxmgettime" jdbcType="VARCHAR"/>
-        <result column="zlxmgetresult" property="zlxmgetresult" jdbcType="VARCHAR"/>
-        <result column="gbdgetresult" property="gbdgetresult" jdbcType="VARCHAR"/>
+        <result column="zlxmgetresult" property="zlxmgetresult" jdbcType="DOUBLE"/>
+        <result column="gbdgetresult" property="gbdgetresult" jdbcType="DOUBLE"/>
         <result column="sendername" property="sendername" jdbcType="VARCHAR"/>
-        <result column="istesting" property="istesting" jdbcType="VARCHAR"/>
+        <result column="istesting" property="istesting" jdbcType="DOUBLE"/>
     </resultMap>
 
-        <select id="getTPubListByShenqingh" resultMap="TPubListResultMap" parameterType="java.lang.String">
+        <select id="getByShenqingh" resultMap="TPubListResultMap" parameterType="java.lang.String">
             select *
             from t_pub_list
             where an = #{shenqingh}
