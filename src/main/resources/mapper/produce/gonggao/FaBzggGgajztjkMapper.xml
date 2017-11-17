@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gwssi.eoms.dao.produce.gonggao.FaBzggGgajztjkDao">
     <resultMap id="FaBzggGgajztjkResultMap" type="com.gwssi.eoms.model.domain.produce.gonggao.FaBzggGgajztjk">
-        <id column="fa_bzgg_ggajztjk_id" property="fa_bzgg_ggajztjk_id" jdbcType="DOUBLE"/>
+        <id column="fa_bzgg_ggajztjk_id" property="fa_bzgg_ggajztjk_id" jdbcType="VARCHAR"/>
         <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
         <result column="zhuanlilx" property="zhuanlilx" jdbcType="VARCHAR"/>
         <result column="shenqingr" property="shenqingr" jdbcType="VARCHAR"/>
@@ -32,9 +32,9 @@
     </resultMap>
 
     <select id="getByShenqingh" resultMap="FaBzggGgajztjkResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_ggajztjk
-        where shenqingh = #{shenqingh}
+        SELECT *
+        FROM FA_BZGG_GGAJZTJK
+        WHERE SHENQINGH = #{shenqingh}
     </select>
 
 </mapper>

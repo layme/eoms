@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.gongbu.FaFmgkJdbLsDao">
+    <resultMap id="FaFmgkJdbLsResultMap" type="com.gwssi.eoms.model.domain.produce.gongbu.FaFmgkJdbLs">
+        <id column="fa_fmgk_jdb_ls_id" property="fa_fmgk_jdb_ls_id" jdbcType="DOUBLE"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="jiaoduijl" property="jiaoduijl" jdbcType="VARCHAR"/>
+        <result column="jiaoduijlms" property="jiaoduijlms" jdbcType="VARCHAR"/>
+        <result column="jinrujdsj" property="jinrujdsj" jdbcType="VARCHAR"/>
+        <result column="jiaoduikssj" property="jiaoduikssj" jdbcType="VARCHAR"/>
+        <result column="jiaoduijssj" property="jiaoduijssj" jdbcType="VARCHAR"/>
+        <result column="jiaoduiwcsj" property="jiaoduiwcsj" jdbcType="VARCHAR"/>
+        <result column="renlingr" property="renlingr" jdbcType="VARCHAR"/>
+        <result column="renlingrcsdm" property="renlingrcsdm" jdbcType="VARCHAR"/>
+        <result column="zhuanlissj" property="zhuanlissj" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getByShenqingh" resultMap="FaFmgkJdbLsResultMap" parameterType="java.lang.String">
+        SELECT *
+        FROM FA_FMGK_JDB_LS_2
+        WHERE SHENQINGH = #{shenqingh}
+    </select>
+
+</mapper>

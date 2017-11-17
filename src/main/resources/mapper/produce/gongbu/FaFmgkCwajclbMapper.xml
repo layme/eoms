@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.gongbu.FaFmgkCwajclbDao">
+    <resultMap id="FaFmgkCwajclbResultMap" type="com.gwssi.eoms.model.domain.produce.gongbu.FaFmgkCwajclb">
+        <id column="fa_fmgk_cwajclb_id" property="fa_fmgk_cwajclb_id" jdbcType="DOUBLE"/>
+        <result column="fa_fmgk_ggajztjk_id" property="fa_fmgk_ggajztjk_id" jdbcType="DOUBLE"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="shenqingr" property="shenqingr" jdbcType="VARCHAR"/>
+        <result column="pctbj" property="pctbj" jdbcType="VARCHAR"/>
+        <result column="gonggaozt" property="gonggaozt" jdbcType="VARCHAR"/>
+        <result column="zhufenleih" property="zhufenleih" jdbcType="VARCHAR"/>
+        <result column="yuguggr" property="yuguggr" jdbcType="VARCHAR"/>
+        <result column="gonggaor" property="gonggaor" jdbcType="VARCHAR"/>
+        <result column="bandengfwr" property="bandengfwr" jdbcType="VARCHAR"/>
+        <result column="jinrujycsj" property="jinrujycsj" jdbcType="VARCHAR"/>
+        <result column="jinruggsj" property="jinruggsj" jdbcType="VARCHAR"/>
+        <result column="cuowujrsj" property="cuowujrsj" jdbcType="VARCHAR"/>
+        <result column="cuowums" property="cuowums" jdbcType="VARCHAR"/>
+        <result column="cuowuzl" property="cuowuzl" jdbcType="VARCHAR"/>
+        <result column="chushenyxm" property="chushenyxm" jdbcType="VARCHAR"/>
+        <result column="shishenyxm" property="shishenyxm" jdbcType="VARCHAR"/>
+        <result column="chushenybm" property="chushenybm" jdbcType="VARCHAR"/>
+        <result column="shushenybm" property="shushenybm" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+        <result column="chulizt" property="chulizt" jdbcType="VARCHAR"/>
+        <result column="renlingr" property="renlingr" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getByShenqingh" resultMap="FaFmgkCwajclbResultMap" parameterType="java.lang.String">
+        SELECT *
+        FROM FA_FMGK_CWAJCLB
+        WHERE SHENQINGH = #{shenqingh}
+    </select>
+
+    <!--公布校验池异常总数-->
+    <select id="getPublishCheckPoolExceptionCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM FA_FMGK_CWAJCLB CW
+        LEFT JOIN ZPT_YHQXGL_YH YH
+        ON CW.CHUSHENYXM = YH.YONGHUZH
+        LEFT JOIN FA_FMGK_JDB JDB
+        ON CW.SHENQINGH = JDB.SHENQINGH, FA_FMGK_CBJYB_2 JY
+        WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+        AND CW.SHENQINGH = JY.SHENQINGH
+        AND CW.GONGGAOZT IN ('4', '5')
+    </select>
+
+    <!--公布池异常总数-->
+    <select id="getPublishPoolExceptionCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM FA_FMGK_CWAJCLB CW, FA_FMGK_GKTDB TDB, FA_FMGK_GKAJZTJK JK
+        WHERE TDB.SHENQINGH = CW.SHENQINGH
+        AND CW.SHENQINGH = JK.SHENQINGH
+        AND CW.CUOWUZL IN ('5', '6', '7')
+        AND TDB.QUERENZT != '1'
+    </select>
+
+</mapper>

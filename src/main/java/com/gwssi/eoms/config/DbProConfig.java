@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
 
@@ -39,7 +42,11 @@ public class DbProConfig {
 
     @Bean
     public SqlSessionTemplate sqlSessionTemplatePro() throws Exception {
-        SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactoryPro()); // 使用上面配置的Factory
-        return template;
+        return new SqlSessionTemplate(sqlSessionFactoryPro()); // 使用上面配置的Factory
+    }
+
+    @Bean
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return new DataSourceTransactionManager(dataSource);
     }
 }

@@ -79,10 +79,67 @@
         <result column="qianzhangnr" property="qianzhangnr" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="PublishNoticeLoseDTOResultMap" type="com.gwssi.eoms.model.dto.PublishNoticeLoseDTO">
+        <result column="shenqingh" property="requestID" jdbcType="VARCHAR"/>
+        <result column="faminggbr" property="publishDate" jdbcType="VARCHAR"/>
+        <result column="chengxudmc" property="step" jdbcType="VARCHAR"/>
+        <result column="zhuangtaimc" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="PublishNoticeSuccessAndLoseVOResultMap" type="com.gwssi.eoms.model.vo.PublishNoticeSuccessAndLoseVO">
+        <result column="shenqingh" property="requestID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询案件信息-->
     <select id="getByShenqingh" resultMap="GgZlxZhuResultMap" parameterType="java.lang.String">
-        select *
-        from gg_zlx_zhu
-        where shenqingh = #{shenqingh}
+        SELECT *
+          FROM GG_ZLX_ZHU
+         WHERE SHENQINGH = #{shenqingh}
     </select>
 
+    <!--查询失效案件的案件总数-->
+    <select id="getPublishNoticeLoseCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(*)
+          FROM GG_ZLX_ZHU ZHU
+         WHERE SUBSTR(ZHU.ANJIANYWZT, '0', '5') = 'S1101'
+           AND ZHU.SHENQINGH IN
+               (SELECT FA_FMGK_GKQRB.SHENQINGH
+                  FROM FA_FMGK_GKQRB
+                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair})
+    </select>
+
+    <!--查询失效案件的案件列表-->
+    <select id="getPublishNoticeLoseList" resultMap="PublishNoticeLoseDTOResultMap" parameterType="java.lang.String">
+        SELECT ZHU.SHENQINGH,
+               ZHU.FAMINGGBR,
+               CXDPZ.CHENGXUDMC,
+               SCZT.ZHUANGTAIMC
+          FROM GG_ZLX_ZHU ZHU
+          LEFT JOIN GG_SCZT_SCZTPZ SCZT
+            ON SCZT.ZHUANGTAIBH = ZHU.ANJIANYWZT
+     LEFT JOIN GG_SCZT_SCCXDPZ CXDPZ
+            ON CXDPZ.CHENGXUDBH = SCZT.CHENGXUDBH
+         WHERE SUBSTR(ZHU.ANJIANYWZT, '0', '5') = 'S1101'
+           AND ZHU.SHENQINGH IN
+               (SELECT FA_FMGK_GKQRB.SHENQINGH
+                  FROM FA_FMGK_GKQRB
+                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair})
+    </select>
+
+    <!--查询发送成功且失效的案件列表-->
+    <select id="getPublishNoticeSuccessAndLoseList" resultMap="PublishNoticeSuccessAndLoseVOResultMap" parameterType="java.lang.String">
+        SELECT ZHU.SHENQINGH
+          FROM GG_ZLX_ZHU ZHU
+         WHERE SUBSTR(ZHU.ANJIANYWZT, '0', '5') = 'S1101'
+           AND ZHU.SHENQINGH IN
+               (SELECT B.SHENQINGH
+                  FROM FA_FMGK_GKQRB B
+                 WHERE B.GONGKAIR = #{gongkair}
+                   AND B.SHENQINGH IN
+                       (SELECT GG_WJ_TZSMSB.YEWUZTBH
+                          FROM GG_WJ_TZSMSB
+                         WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
+                           AND GG_WJ_TZSMSB.TONGZHISZT = '05'
+                          AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq})))
+    </select>
 </mapper>

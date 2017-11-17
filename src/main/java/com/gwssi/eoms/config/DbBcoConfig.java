@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Import({DataSourceConfig.class})
-@MapperScan(basePackages = {"com.gwssi.eoms.dao.bookConcern"}, sqlSessionFactoryRef = "sqlSessionFactoryBco")
+@MapperScan(basePackages = DbBcoConfig.PACKAGE, sqlSessionFactoryRef = "sqlSessionFactoryBco")
 public class DbBcoConfig {
     static final String PACKAGE = "com.gwssi.eoms.dao.bookConcern";
     static final String MAPPER_LOCATION = "classpath:mapper/bookConcern/*.xml";

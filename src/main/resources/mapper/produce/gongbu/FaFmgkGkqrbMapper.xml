@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.gongbu.FaFmgkGkqrbDao">
+    <resultMap id="FaFmgkGkqrbResultMap" type="com.gwssi.eoms.model.domain.produce.gongbu.FaFmgkGkqrb">
+        <id column="fa_fmgk_gkqrb_id" property="fa_fmgk_gkqrb_id" jdbcType="DOUBLE"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="juanqih" property="juanqih" jdbcType="VARCHAR"/>
+        <result column="gongkair" property="gongkair" jdbcType="VARCHAR"/>
+        <result column="gongkaitdr" property="gongkaitdr" jdbcType="VARCHAR"/>
+        <result column="daoqir" property="daoqir" jdbcType="VARCHAR"/>
+        <result column="gongkailxbm" property="gongkailxbm" jdbcType="VARCHAR"/>
+        <result column="jiaoduizt" property="jiaoduizt" jdbcType="VARCHAR"/>
+        <result column="fenleiwcbj" property="fenleiwcbj" jdbcType="VARCHAR"/>
+        <result column="shifouwtaj" property="shifouwtaj" jdbcType="VARCHAR"/>
+        <result column="zhuanzhengc" property="zhuanzhengc" jdbcType="VARCHAR"/>
+        <result column="chejianbs" property="chejianbs" jdbcType="VARCHAR"/>
+        <result column="tidangczy" property="tidangczy" jdbcType="VARCHAR"/>
+        <result column="caozuosj" property="caozuosj" jdbcType="VARCHAR"/>
+        <result column="shenchaydm" property="shenchaydm" jdbcType="VARCHAR"/>
+        <result column="gongkaiqrsj" property="gongkaiqrsj" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询案件-->
+    <select id="getByShenqingh" resultMap="FaFmgkGkqrbResultMap" parameterType="java.lang.String">
+        SELECT *
+          FROM FA_FMGK_GKQRB
+         WHERE SHENQINGH = #{shenqingh}
+    </select>
+
+    <!--查询待公布案件总数-->
+    <select id="getPublishNoticeAllCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(1)
+          FROM FA_FMGK_GKQRB
+         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}
+    </select>
+
+    <!--查询成功公布的案件总数-->
+    <select id="getPublishNoticeSuccessCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(1)
+          FROM FA_FMGK_GKQRB B
+         WHERE B.GONGKAIR = #{gongkair}
+           AND B.SHENQINGH IN
+               (SELECT GG_WJ_TZSMSB.YEWUZTBH
+                  FROM GG_WJ_TZSMSB
+                 WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
+           AND GG_WJ_TZSMSB.TONGZHISZT = '05'
+           AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq}))
+    </select>
+
+    <!--查询发送失败的公布案件总数-->
+    <select id="getPublishNoticeFailureCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(1)
+          FROM FA_FMGK_GKQRB
+         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}
+           AND FA_FMGK_GKQRB.SHENQINGH NOT IN
+               (SELECT GG_WJ_TZSMSB.YEWUZTBH
+                  FROM GG_WJ_TZSMSB
+                 WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
+                   AND GG_WJ_TZSMSB.TONGZHISZT = '05'
+                   AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq}))
+           AND FA_FMGK_GKQRB.SHENQINGH NOT IN
+               (SELECT ZHU.SHENQINGH
+                  FROM GG_ZLX_ZHU ZHU
+                 WHERE SUBSTR(ZHU.ANJIANYWZT, '0', '5') = 'S1101'
+                   AND ZHU.SHENQINGH IN
+                       (SELECT FA_FMGK_GKQRB.SHENQINGH
+                          FROM FA_FMGK_GKQRB
+                         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}))
+    </select>
+
+    <!--查询发送失败的公布案件列表-->
+    <select id="getPublishNoticeFailureList" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT SHENQINGH
+          FROM FA_FMGK_GKQRB
+         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}
+           AND FA_FMGK_GKQRB.SHENQINGH NOT IN
+               (SELECT GG_WJ_TZSMSB.YEWUZTBH
+                  FROM GG_WJ_TZSMSB
+                 WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
+                   AND GG_WJ_TZSMSB.TONGZHISZT = '05'
+                   AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq}))
+                   AND FA_FMGK_GKQRB.SHENQINGH NOT IN
+                       (SELECT ZHU.SHENQINGH
+                          FROM GG_ZLX_ZHU ZHU
+                         WHERE SUBSTR(ZHU.ANJIANYWZT, '0', '5') = 'S1101'
+                           AND ZHU.SHENQINGH IN
+                               (SELECT FA_FMGK_GKQRB.SHENQINGH
+                                  FROM FA_FMGK_GKQRB
+                                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}))
+    </select>
+</mapper>

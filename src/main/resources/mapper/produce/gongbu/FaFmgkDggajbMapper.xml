@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.gongbu.FaFmgkDggajbDao">
+    <resultMap id="FaFmgkDggajbResultMap" type="com.gwssi.eoms.model.domain.produce.gongbu.FaFmgkDggajb">
+        <id column="fa_fmgk_dggajb_id" property="fa_fmgk_dggajb_id" jdbcType="DOUBLE"/>
+        <result column="fa_fmgk_ggajztjk_id" property="fa_fmgk_ggajztjk_id" jdbcType="DOUBLE"/>
+        <result column="shenqingr" property="shenqingr" jdbcType="VARCHAR"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="daoqir" property="daoqir" jdbcType="VARCHAR"/>
+        <result column="pctbj" property="pctbj" jdbcType="VARCHAR"/>
+        <result column="zuixiaoyxqr" property="zuixiaoyxqr" jdbcType="VARCHAR"/>
+        <result column="tiqiangksxr" property="tiqiangksxr" jdbcType="VARCHAR"/>
+        <result column="canshenhgfwr" property="canshenhgfwr" jdbcType="VARCHAR"/>
+        <result column="yuguggr" property="yuguggr" jdbcType="VARCHAR"/>
+        <result column="gonggaozt" property="gonggaozt" jdbcType="VARCHAR"/>
+        <result column="zhufenleih" property="zhufenleih" jdbcType="VARCHAR"/>
+        <result column="shifoutgjy" property="shifoutgjy" jdbcType="VARCHAR"/>
+        <result column="bandengfwr" property="bandengfwr" jdbcType="VARCHAR"/>
+        <result column="jinrujycsj" property="jinrujycsj" jdbcType="VARCHAR"/>
+        <result column="jiaoduijlwcsj" property="jiaoduijlwcsj" jdbcType="VARCHAR"/>
+        <result column="songfenlsj" property="songfenlsj" jdbcType="VARCHAR"/>
+        <result column="fenleiwcsj" property="fenleiwcsj" jdbcType="VARCHAR"/>
+        <result column="fenleiwcbj" property="fenleiwcbj" jdbcType="VARCHAR"/>
+        <result column="weiyongwjxx" property="weiyongwjxx" jdbcType="VARCHAR"/>
+        <result column="weiyongfyxx" property="weiyongfyxx" jdbcType="VARCHAR"/>
+        <result column="qitaycxx" property="qitaycxx" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getByShenqingh" resultMap="FaFmgkDggajbResultMap" parameterType="java.lang.String">
+        SELECT *
+        FROM FA_BZGG_DGGAJB
+        WHERE SHENQINGH = #{shenqingh}
+    </select>
+
+    <!--获取公布待审核异常总数 改版分类5天外-->
+    <select id="getPublishWaitAuditOut5Count" resultType="java.lang.Integer">
+        SELECT COUNT(*)FROM (
+        SELECT DGG.SHENQINGH
+        FROM FA_FMGK_DGGAJB DGG
+        INNER JOIN FA_FMGK_CBJYB_2 JYB ON JYB.SHENQINGH = DGG.SHENQINGH
+        INNER JOIN GG_ZLX_ZHU ZHU ON ZHU.SHENQINGH = DGG.SHENQINGH AND ZHU.YOUXIAOBJ = '0' AND DGG.GONGGAOZT != '20'
+        LEFT JOIN (SELECT SHENQINGH, COUNT(SHENQINGH) WEIYONGWJXX FROM GG_WJ_ZJWJ WHERE WENJIANCLZT = '0' AND WENJIANSCBJ = '0' AND ZHONGJIANWJSABJ = '1' GROUP BY SHENQINGH) WJ
+        ON ZHU.SHENQINGH = WJ.SHENQINGH
+        LEFT JOIN (SELECT B.SHENQINGH, B.GUOJISQH FROM GG_ZLX_GJ_ZG B) GJ ON ZHU.SHENQINGH = GJ.SHENQINGH) T
+        WHERE SHENQINGH NOT IN (
+        SELECT SHENQINGH FROM (SELECT DGG.SHENQINGH AS SHENQINGH
+        FROM FA_FMGK_DGGAJB DGG
+        INNER JOIN FA_FMGK_CBJYB_2 JYB  ON JYB.SHENQINGH = DGG.SHENQINGH
+        INNER JOIN (SELECT T.SHENQINGH, T.RIQI, T.N FROM (SELECT DGG.SHENQINGH, Z2.RIQI, ROW_NUMBER() OVER(PARTITION BY DGG.SHENQINGH ORDER BY Z2.RIQI) N
+        FROM ZPT_SJWH_GZRLZ Z1, ZPT_SJWH_GZRLZ Z2, FA_FMGK_DGGAJB DGG
+        LEFT JOIN FA_FMGK_CBJYB_2 JYB ON JYB.SHENQINGH = DGG.SHENQINGH AND JYB.SONGFENLSJ IS NOT NULL
+        WHERE Z1.RIQI = TO_CHAR((TO_DATE(SUBSTR(JYB.SONGFENLSJ, 0, 8), 'YYYYMMDD') + 1), 'YYYYMMDD')
+        AND Z1.JIAOZHENGGZR &lt;= Z2.RIQI AND Z2.SHIFOUJQ = '1' ORDER BY Z2.RIQI) T
+        WHERE T.N = 5 AND TO_CHAR(SYSDATE, 'YYYYMMDD') &lt;= T.RIQI) T1 ON DGG.SHENQINGH = T1.SHENQINGH
+        INNER JOIN GG_ZLX_ZHU ZHU ON ZHU.SHENQINGH = DGG.SHENQINGH
+        AND ZHU.YOUXIAOBJ = '0' AND DGG.GONGGAOZT != '20'
+        LEFT JOIN (SELECT SHENQINGH, COUNT(SHENQINGH) WEIYONGWJXX
+        FROM GG_WJ_ZJWJ WHERE WENJIANCLZT = '0' AND WENJIANSCBJ = '0'
+        AND ZHONGJIANWJSABJ = '1' GROUP BY SHENQINGH) WJ ON ZHU.SHENQINGH = WJ.SHENQINGH) T)
+    </select>
+
+    <!--获取公布待审核异常总数 改版分类5天内-->
+    <select id="getPublishWaitAuditIn5Count" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (
+        SELECT DGG.SHENQINGH
+        FROM FA_FMGK_DGGAJB DGG
+        INNER JOIN FA_FMGK_CBJYB_2 JYB ON JYB.SHENQINGH = DGG.SHENQINGH
+        INNER JOIN GG_ZLX_ZHU ZHU ON ZHU.SHENQINGH = DGG.SHENQINGH
+        AND ZHU.YOUXIAOBJ = '0'  AND DGG.GONGGAOZT != '20'
+        INNER JOIN (SELECT T.SHENQINGH, T.RIQI, T.N
+        FROM (SELECT DGG.SHENQINGH,  Z2.RIQI, ROW_NUMBER() OVER(PARTITION BY DGG.SHENQINGH ORDER BY Z2.RIQI) N
+        FROM ZPT_SJWH_GZRLZ Z1, ZPT_SJWH_GZRLZ Z2, FA_FMGK_DGGAJB DGG
+        INNER JOIN FA_FMGK_CBJYB_2 JYB ON JYB.SHENQINGH = DGG.SHENQINGH AND JYB.SONGFENLSJ IS NOT NULL
+        WHERE Z1.RIQI = TO_CHAR((TO_DATE(SUBSTR(JYB.SONGFENLSJ, 0, 8), 'YYYYMMDD') + 1), 'YYYYMMDD')
+        AND Z1.JIAOZHENGGZR &lt;= Z2.RIQI AND Z2.SHIFOUJQ = '1' ORDER BY Z2.RIQI) T
+        WHERE T.N = 5 AND TO_CHAR(SYSDATE, 'YYYYMMDD') &lt;= T.RIQI) T1 ON DGG.SHENQINGH = T1.SHENQINGH
+        LEFT JOIN (SELECT SHENQINGH, COUNT(SHENQINGH) WEIYONGWJXX FROM GG_WJ_ZJWJ
+        WHERE WENJIANCLZT = '0' AND WENJIANSCBJ = '0' AND ZHONGJIANWJSABJ = '1' GROUP BY SHENQINGH) WJ
+        ON ZHU.SHENQINGH = WJ.SHENQINGH LEFT JOIN (SELECT B.SHENQINGH, B.GUOJISQH FROM GG_ZLX_GJ_ZG B
+        ) GJ ON ZHU.SHENQINGH = GJ.SHENQINGH) T
+    </select>
+
+</mapper>

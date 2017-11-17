@@ -16,9 +16,40 @@
     </resultMap>
 
     <select id="getByShenqingh" resultMap="WfCurrentstepResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_bfzsb
-        where shenqingh = #{shenqingh}
+        SELECT *
+        FROM FA_BZGG_BFZSB
+        WHERE SHENQINGH = #{shenqingh}
     </select>
+
+    <delete id="deleteByRequestIdListAndName">
+        DELETE FROM WF_CURRENTSTEP P
+         WHERE P.ENTRY_ID IN
+               (SELECT Y.ID FROM WF_WFENTRY Y WHERE Y.NAME = #{name} AND Y.MAIN_ID IN
+                <foreach collection="list" item="shenqingh" index="index" open="(" separator="," close=")">
+                    #{shenqingh}
+                </foreach>
+                )
+    </delete>
+
+    <insert id="insertByRequestIdListAndName">
+        INSERT INTO WF_CURRENTSTEP
+        SELECT SEQ_WF_CURRENTSTEPS.NEXTVAL,
+        B.ID,
+        #{step_id},
+        '',
+        '自动',
+        '29-12月 -16 11.02.32.879000 上午',
+        '',
+        '',
+        #{status},
+        '',
+        ''
+        FROM WF_WFENTRY B
+        WHERE B.NAME = #{name}
+        AND B.MAIN_ID IN
+        <foreach collection="list" item="shenqingh" index="index" open="(" separator="," close=")">
+            #{shenqingh}
+        </foreach>
+    </insert>
 
 </mapper>

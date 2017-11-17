@@ -30,9 +30,28 @@
     </resultMap>
 
     <select id="getByShenqingh" resultMap="FaBzggCwajclbResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_cwajclb
-        where shenqingh = #{shenqingh}
+        SELECT *
+        FROM FA_BZGG_CWAJCLB
+        WHERE SHENQINGH = #{shenqingh}
+    </select>
+
+    <!--公告校验池异常总数-->
+    <select id="getAnnouncementCheckPoolExceptionCount" resultType="java.lang.Integer">
+        select count(*)
+        from fa_bzgg_cwajclb cw
+        where cw.cuowuzl in ('1', '2', '3', '4')
+        and cw.gonggaozt in ('4', '5')
+    </select>
+
+    <!--公告池异常总数-->
+    <select id="getAnnouncementPoolExceptionCount" resultType="java.lang.Integer">
+        select count(*)
+        from fa_bzgg_cwajclb cw, fa_bzgg_zsglb zsgl
+        join fa_bzgg_cbjyb_ls_2 ls
+        on ls.shenqingh = zsgl.shenqingh
+        where zsgl.shenqingh = cw.shenqingh
+        and cw.cuowuzl in ('5', '7', '6')
+        and zsgl.zhengshuzt != 06
     </select>
 
 </mapper>

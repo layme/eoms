@@ -12,9 +12,36 @@
     </resultMap>
 
     <select id="getFaBzggBfzsbByShenqingh" resultMap="WfWfentryResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_bfzsb
-        where shenqingh = #{shenqingh}
+        SELECT *
+        FROM FA_BZGG_BFZSB
+        WHERE SHENQINGH = #{shenqingh}
     </select>
+
+    <delete id="deleteByRequestIdListAndName">
+        DELETE FROM WF_WFENTRY Y
+         WHERE Y.NAME = #{name}
+           AND Y.MAIN_ID IN
+           <foreach collection="list" item="shenqingh" index="index" open="(" separator="," close=")">
+               #{shenqingh}
+           </foreach>
+    </delete>
+    
+    <insert id="insertByRequestIdListAndName">
+        INSERT INTO WF_WFENTRY
+          SELECT SEQ_WF_WFENTRY.NEXTVAL,
+                 #{name},
+                 '1',
+                 '',
+                 '',
+                 B.INSTANCE_ID,
+                 B.MAIN_ID
+            FROM WF_WFENTRY B
+           WHERE B.NAME = '00'
+             AND B.STATE = '1'
+             AND B.MAIN_ID IN
+             <foreach collection="list" item="shenqingh" index="index" open="(" separator="," close=")">
+                 #{shenqingh}
+             </foreach>
+    </insert>
 
 </mapper>

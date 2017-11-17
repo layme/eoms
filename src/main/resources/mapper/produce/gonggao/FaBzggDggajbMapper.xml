@@ -27,9 +27,21 @@
     </resultMap>
 
     <select id="getByShenqingh" resultMap="FaBzggDggajbResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_dggajb
-        where shenqingh = #{shenqingh}
+        SELECT *
+        FROM FA_BZGG_DGGAJB
+        WHERE SHENQINGH = #{shenqingh}
     </select>
+
+    <!--获取公告待审核异常总数-->
+    <select id="getAnnouncementWaitAuditCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM FA_BZGG_DGGAJB D
+        INNER JOIN GG_ZLX_ZHU ZHU
+        ON D.SHENQINGH = ZHU.SHENQINGH
+        AND ZHU.YOUXIAOBJ = '0'
+        WHERE D.GONGGAOZT != '20'
+    </select>
+
+
 
 </mapper>

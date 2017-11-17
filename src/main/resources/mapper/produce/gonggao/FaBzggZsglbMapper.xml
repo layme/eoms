@@ -52,9 +52,9 @@
     </resultMap>
 
     <select id="getByShenqingh" resultMap="FaBzggZsglbResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_zsglb
-        where shenqingh = #{shenqingh}
+        SELECT *
+        FROM FA_BZGG_ZSGLB
+        WHERE SHENQINGH = #{shenqingh}
     </select>
 
 </mapper>

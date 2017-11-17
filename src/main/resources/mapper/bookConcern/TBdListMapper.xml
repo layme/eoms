@@ -20,8 +20,8 @@
     </resultMap>
 
         <select id="getByShenqingh" resultMap="TBdListResultMap" parameterType="java.lang.String">
-            select *
-            from t_pub_list
-            where an = #{shenqingh}
+            SELECT *
+            FROM T_PUB_LIST
+            WHERE AN = #{shenqingh}
         </select>
 </mapper>

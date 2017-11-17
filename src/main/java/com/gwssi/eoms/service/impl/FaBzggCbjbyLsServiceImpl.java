@@ -6,6 +6,8 @@ import com.gwssi.eoms.service.FaBzggCbjbyLsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by admin on 2017/10/24.
  */
@@ -15,7 +17,7 @@ public class FaBzggCbjbyLsServiceImpl implements FaBzggCbjbyLsService {
     FaBzggCbjbyLsDao faBzggCbjbyLsDao;
 
     @Override
-    public FaBzggCbjbyLs getByShenqingh(String Shenqingh) {
+    public List<FaBzggCbjbyLs> getByShenqingh(String Shenqingh) {
         return faBzggCbjbyLsDao.getByShenqingh(Shenqingh);
     }
 }
