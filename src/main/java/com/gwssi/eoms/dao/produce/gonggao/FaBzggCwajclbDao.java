@@ -15,10 +15,10 @@ import java.util.List;
 public interface FaBzggCwajclbDao {
     /**
      * 获取单条记录
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<FaBzggCwajclb> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<FaBzggCwajclb> getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 获取公告校验池异常总数
@@ -31,4 +31,10 @@ public interface FaBzggCwajclbDao {
      * @return
      */
     Integer getAnnouncementPoolExceptionCount();
+
+    /**
+     * 根据申请号删除数据
+     * @param requestID
+     */
+    void deleteByRequest(@Param("requestID") String requestID);
 }

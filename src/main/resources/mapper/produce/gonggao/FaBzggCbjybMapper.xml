@@ -26,10 +26,16 @@
         <result column="modname" property="modname" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaBzggCbjybResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaBzggCbjybResultMap" parameterType="java.lang.String">
         SELECT *
-        FROM FA_BZGG_CBJYB_2
-        WHERE SHENQINGH = #{shenqingh}
+          FROM FA_BZGG_CBJYB_2
+         WHERE SHENQINGH = #{requestID}
     </select>
+
+    <update id="updateStatusAndConclusion" parameterType="java.lang.String">
+        UPDATE FA_BZGG_CBJYB_2 JY
+           SET JY.GONGGAOZT = #{status}, JY.JIAODUIJL = #{conclusion}
+         WHERE JY.SHENQINGH = #{requestID}
+    </update>
 
 </mapper>

@@ -13,5 +13,18 @@ import java.util.List;
 @Mapper
 @Component(value = "faBzggGgajztjkDao")
 public interface FaBzggGgajztjkDao {
-    List<FaBzggGgajztjk> getByShenqingh(@Param("shenqingh") String shenqingh);
+    /**
+     * 根据申请号查询案件列表
+     * @param requestID
+     * @return
+     */
+    List<FaBzggGgajztjk> getByRequestID(@Param("requestID") String requestID);
+
+    /**
+     * 修改案件状态
+     * @param requestID
+     * @param status
+     * @param pubDate
+     */
+    void updateStatusByRequestID(@Param("requestID") String requestID, @Param("Status") String status, @Param("pubDate") String pubDate);
 }

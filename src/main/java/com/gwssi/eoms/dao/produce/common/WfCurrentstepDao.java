@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 @Component(value = "wfCurrentstepDao")
 public interface WfCurrentstepDao {
-    WfCurrentstep getByshenqingh(@Param("shenqingh") String shenqingh);
+    WfCurrentstep getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 批量删除申请号指定的当前工作流

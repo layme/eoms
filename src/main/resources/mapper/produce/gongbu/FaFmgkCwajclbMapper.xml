@@ -29,10 +29,10 @@
         <result column="renlingr" property="renlingr" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaFmgkCwajclbResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaFmgkCwajclbResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_FMGK_CWAJCLB
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--公布校验池异常总数-->

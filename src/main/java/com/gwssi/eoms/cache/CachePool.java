@@ -2,6 +2,7 @@ package com.gwssi.eoms.cache;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +12,7 @@ import java.util.Map;
  * Description:
  */
 public class CachePool {
-    private static Map cachePool = new HashMap();
+    private static Map<Object, Object> cachePool = new ConcurrentHashMap();
 
     public static void setValue(Object key, Object value) {
         cachePool.put(key, value);

@@ -29,29 +29,33 @@
         <result column="renlingr" property="renlingr" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaBzggCwajclbResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaBzggCwajclbResultMap" parameterType="java.lang.String">
         SELECT *
-        FROM FA_BZGG_CWAJCLB
-        WHERE SHENQINGH = #{shenqingh}
+          FROM FA_BZGG_CWAJCLB
+         WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--公告校验池异常总数-->
     <select id="getAnnouncementCheckPoolExceptionCount" resultType="java.lang.Integer">
         select count(*)
-        from fa_bzgg_cwajclb cw
-        where cw.cuowuzl in ('1', '2', '3', '4')
-        and cw.gonggaozt in ('4', '5')
+          from fa_bzgg_cwajclb cw
+         where cw.cuowuzl in ('1', '2', '3', '4')
+          and cw.gonggaozt in ('4', '5')
     </select>
 
     <!--公告池异常总数-->
     <select id="getAnnouncementPoolExceptionCount" resultType="java.lang.Integer">
         select count(*)
-        from fa_bzgg_cwajclb cw, fa_bzgg_zsglb zsgl
-        join fa_bzgg_cbjyb_ls_2 ls
-        on ls.shenqingh = zsgl.shenqingh
-        where zsgl.shenqingh = cw.shenqingh
-        and cw.cuowuzl in ('5', '7', '6')
-        and zsgl.zhengshuzt != 06
+          from fa_bzgg_cwajclb cw, fa_bzgg_zsglb zsgl
+          join fa_bzgg_cbjyb_ls_2 ls
+            on ls.shenqingh = zsgl.shenqingh
+         where zsgl.shenqingh = cw.shenqingh
+           and cw.cuowuzl in ('5', '7', '6')
+           and zsgl.zhengshuzt != 06
     </select>
+
+    <delete id="deleteByRequest" parameterType="java.lang.String">
+        DELETE FROM FA_BZGG_CWAJCLB WHERE SHENQINGH = #{requestID}
+    </delete>
 
 </mapper>

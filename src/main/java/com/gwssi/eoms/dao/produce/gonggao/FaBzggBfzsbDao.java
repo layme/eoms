@@ -13,5 +13,5 @@ import java.util.List;
 @Mapper
 @Component(value = "faBzggBfzsbDao")
 public interface FaBzggBfzsbDao {
-    List<FaBzggBfzsb> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<FaBzggBfzsb> getByRequestID(@Param("requestID") String requestID);
 }

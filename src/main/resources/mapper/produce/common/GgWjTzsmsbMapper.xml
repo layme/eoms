@@ -40,10 +40,10 @@
         <result column="xmlwenjiancflj" property="xmlwenjiancflj" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="GgWjTzsmsbResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="GgWjTzsmsbResultMap" parameterType="java.lang.String">
         select *
         from fa_bzgg_bfzsb
-        where shenqingh = #{shenqingh}
+        where shenqingh = #{requestID}
     </select>
 
 </mapper>

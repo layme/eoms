@@ -15,14 +15,26 @@ import java.util.List;
 public interface FaBzggDggajbDao {
     /**
      * 获取单条记录
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<FaBzggDggajb> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<FaBzggDggajb> getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 获取公告待审核异常总数
      * @return
      */
     Integer getAnnouncementWaitAuditCount();
+
+    /**
+     * 根据申请号删除案件
+     * @param requestID
+     */
+    void deleteByRequestID(@Param("requestID") String requestID);
+
+    /**
+     * 根据申请号插入单条数据
+     * @param requestID
+     */
+    void insertOneByRequestID(@Param("requestID") String requestID);
 }

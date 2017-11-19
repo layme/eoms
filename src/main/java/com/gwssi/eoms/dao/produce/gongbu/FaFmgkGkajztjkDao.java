@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 public interface FaFmgkGkajztjkDao {
     /**
      * 获取单条记录
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    FaFmgkGkajztjk getByShenqingh(@Param("shenqingh") String shenqingh);
+    FaFmgkGkajztjk getByRequestID(@Param("requestID") String requestID);
 }

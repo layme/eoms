@@ -26,10 +26,10 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaBzggDggajbResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaBzggDggajbResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_BZGG_DGGAJB
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--获取公告待审核异常总数-->
@@ -42,6 +42,12 @@
         WHERE D.GONGGAOZT != '20'
     </select>
 
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_BZGG_DGGAJB WHERE SHENQINGH = #{requestID}
+    </delete>
 
+    <insert id="insertOneByRequestID" parameterType="java.lang.String">
+
+    </insert>
 
 </mapper>

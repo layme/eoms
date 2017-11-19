@@ -27,10 +27,10 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaFmgkCbjybLsResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaFmgkCbjybLsResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_FMGK_CBJYB_LS_2
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
 
 </mapper>

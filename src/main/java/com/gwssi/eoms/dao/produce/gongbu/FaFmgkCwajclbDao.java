@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public interface FaFmgkCwajclbDao {
     /**
      * 获取单条记录
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    FaFmgkCwajclb getByShenqingh(@Param("shenqingh") String shenqingh);
+    FaFmgkCwajclb getByRequestID(@Param("requestID") String v);
 
     /**
      * 获取公布校验池异常总数

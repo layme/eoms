@@ -15,10 +15,10 @@
         <result column="previous_id" property="previous_id" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="WfCurrentstepResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="WfCurrentstepResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_BZGG_BFZSB
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
 
     <delete id="deleteByRequestIdListAndName">

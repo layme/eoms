@@ -19,10 +19,10 @@ import java.util.List;
 public interface FaFmgkGkqrbDao {
     /**
      * 获取列表
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<FaFmgkGkqrb> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<FaFmgkGkqrb> getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 查询公布公布及某期应发总数

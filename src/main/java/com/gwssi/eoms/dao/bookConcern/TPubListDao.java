@@ -15,15 +15,15 @@ import java.util.List;
 public interface TPubListDao {
     /**
      * 获取单个申请号的具体信息
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<TPubList> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<TPubList> getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 根据申请号获取出版社已经有数据的申请号列表
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<String> getBookConcernHaveData(@Param("list") List<String> shenqingh);
+    List<String> getBookConcernHaveData(@Param("list") List<String> requestID);
 }

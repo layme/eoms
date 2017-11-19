@@ -25,10 +25,10 @@
         <result column="shujutqsj" property="shujutqsj" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaFmgkGktdbResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaFmgkGktdbResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_FMGK_GKTDB
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
 
 </mapper>

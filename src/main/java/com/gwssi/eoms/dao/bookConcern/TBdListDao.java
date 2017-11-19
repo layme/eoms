@@ -13,5 +13,5 @@ import java.util.List;
 @Mapper
 @Component(value = "tBdListDao")
 public interface TBdListDao {
-    List<TBdList> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<TBdList> getByRequestID(@Param("requestID") String requestID);
 }

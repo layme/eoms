@@ -31,10 +31,16 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByShenqingh" resultMap="FaBzggGgajztjkResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="FaBzggGgajztjkResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_BZGG_GGAJZTJK
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
+
+    <update id="updateStatusByRequestID" parameterType="java.lang.String">
+        UPDATE FA_BZGG_GGAJZTJK JK
+           SET JK.GONGGAOZT = #{status}, JK.GONGGAOR = #{pubDate}
+         WHERE JK.SHENQINGH = #{requestID}
+    </update>
 
 </mapper>

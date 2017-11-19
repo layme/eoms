@@ -17,10 +17,10 @@ import java.util.List;
 public interface GgZlxZhuDao {
     /**
      * 获取列表
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<GgZlxZhu> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<GgZlxZhu> getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 查询公布公布及某期失效案件总数

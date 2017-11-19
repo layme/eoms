@@ -11,10 +11,10 @@
         <result column="main_id" property="main_id" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getFaBzggBfzsbByShenqingh" resultMap="WfWfentryResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="WfWfentryResultMap" parameterType="java.lang.String">
         SELECT *
         FROM FA_BZGG_BFZSB
-        WHERE SHENQINGH = #{shenqingh}
+        WHERE SHENQINGH = #{requestID}
     </select>
 
     <delete id="deleteByRequestIdListAndName">

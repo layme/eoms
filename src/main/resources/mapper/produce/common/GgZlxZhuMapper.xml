@@ -91,10 +91,10 @@
     </resultMap>
 
     <!--查询案件信息-->
-    <select id="getByShenqingh" resultMap="GgZlxZhuResultMap" parameterType="java.lang.String">
+    <select id="getByRequestID" resultMap="GgZlxZhuResultMap" parameterType="java.lang.String">
         SELECT *
           FROM GG_ZLX_ZHU
-         WHERE SHENQINGH = #{shenqingh}
+         WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--查询失效案件的案件总数-->

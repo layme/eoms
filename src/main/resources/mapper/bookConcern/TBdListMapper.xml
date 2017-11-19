@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gwssi.eoms.dao.bookConcern.TBdListDao">
+
     <resultMap id="TBdListResultMap" type="com.gwssi.eoms.model.domain.bookConcern.TBdList">
         <result column="pubtype" property="pubtype" jdbcType="VARCHAR"/>
         <result column="an" property="an" jdbcType="VARCHAR"/>
@@ -19,9 +20,9 @@
         <result column="islunxun" property="islunxun" jdbcType="DOUBLE"/>
     </resultMap>
 
-        <select id="getByShenqingh" resultMap="TBdListResultMap" parameterType="java.lang.String">
+        <select id="getByRequestID" resultMap="TBdListResultMap" parameterType="java.lang.String">
             SELECT *
             FROM T_PUB_LIST
-            WHERE AN = #{shenqingh}
+            WHERE AN = #{requestID}
         </select>
 </mapper>

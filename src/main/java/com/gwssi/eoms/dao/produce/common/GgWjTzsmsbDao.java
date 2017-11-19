@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component(value = "ggWjTzsmsbDao")
 public interface GgWjTzsmsbDao {
-    GgWjTzsmsb getByShenqingh(@Param("shenqingh") String Shenqingh);
+    GgWjTzsmsb getByRequestID(@Param("requestID") String requestID);
 }

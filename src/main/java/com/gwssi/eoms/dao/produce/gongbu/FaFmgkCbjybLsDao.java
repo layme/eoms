@@ -15,8 +15,8 @@ import java.util.List;
 public interface FaFmgkCbjybLsDao {
     /**
      * 获取单条记录
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    List<FaFmgkCbjybLs> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<FaFmgkCbjybLs> getByRequestID(@Param("requestID") String requestID);
 }

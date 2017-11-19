@@ -22,5 +22,5 @@ public interface FaFmgkGktdbDao {
      * @param shenqingh
      * @return
      */
-    List<FaFmgkGktdb> getByShenqingh(@Param("shenqingh") String shenqingh);
+    List<FaFmgkGktdb> getByRequestID(@Param("requestID") String requestID);
 }

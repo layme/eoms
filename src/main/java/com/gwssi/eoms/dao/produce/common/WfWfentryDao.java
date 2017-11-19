@@ -15,10 +15,10 @@ import java.util.List;
 public interface WfWfentryDao {
     /**
      * 根据申请号获取当前工作流信息
-     * @param shenqingh
+     * @param requestID
      * @return
      */
-    WfWfentry getByShenqingh(@Param("shenqingh") String shenqingh);
+    WfWfentry getByRequestID(@Param("requestID") String requestID);
 
     /**
      * 批量删除申请号指定的工作流程段

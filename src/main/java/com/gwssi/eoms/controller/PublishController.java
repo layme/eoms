@@ -46,13 +46,7 @@ public class PublishController {
      */
     @RequestMapping(value = "/api/getPublishNoticeSuccessAndLoseList", method = RequestMethod.GET)
     public List<PublishNoticeSuccessAndLoseVO> getPublishNoticeSuccessAndLoseList(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
-        List<PublishNoticeSuccessAndLoseVO> loseList = new ArrayList<>();
-        loseList.add(new PublishNoticeSuccessAndLoseVO("12324325346"));
-        loseList.add(new PublishNoticeSuccessAndLoseVO("12324325346"));
-        loseList.add(new PublishNoticeSuccessAndLoseVO("12324325346"));
-        loseList.add(new PublishNoticeSuccessAndLoseVO("12324325346"));
-        return loseList;
-//        return publishNoticeService.getPublishNoticeSuccessAndLoseList(publishDate, noticeGenerationDate.replaceAll(" ", "','"));
+        return publishNoticeService.getPublishNoticeSuccessAndLoseList(publishDate, noticeGenerationDate.replaceAll(" ", "','"));
     }
 
     /**
