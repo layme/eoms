@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.bookConcern.TBdFeedBackDao">
+    <resultMap id="TBdFeedBackResultMap" type="com.gwssi.eoms.model.domain.bookConcern.TBdFeedBack">
+        <result column="pubtype" property="pubType" jdbcType="VARCHAR"/>
+        <result column="bddate" property="bdDate" jdbcType="VARCHAR"/>
+        <result column="errorid" property="errorID" jdbcType="VARCHAR"/>
+        <result column="an" property="an" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="informed" property="informed" jdbcType="DOUBLE"/>
+        <result column="flag" property="flag" jdbcType="DOUBLE"/>
+        <result column="temp" property="temp" jdbcType="VARCHAR"/>
+        <result column="feedbacktime" property="feedBackTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listByRequestID" resultMap="TBdFeedBackResultMap" parameterType="java.lang.String">
+        SELECT PUBTYPE, BDDATE, ERRORID, AN, CONTENT, INFORMED, FLAG, TEMP, FEEDBACKTIME
+          FROM T_BD_FEEDBACK
+         WHERE AN = #{requestID}
+    </select>
+
+    <select id="getErrorByRequestIDAndBdDate" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT CONTENT
+          FROM T_BD_FEEDBACK
+         WHERE AN = #{requestID}
+           AND BDDATE = #{bdDate}
+    </select>
+
+</mapper>

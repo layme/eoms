@@ -1,5 +1,6 @@
 package com.gwssi.eoms.dao.produce.gonggao;
 
+import com.gwssi.eoms.dao.produce.BaseDao;
 import com.gwssi.eoms.model.domain.produce.gonggao.FaBzggCwajclb;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,29 +13,37 @@ import java.util.List;
  */
 @Mapper
 @Component(value = "faBzggCwajclbDao")
-public interface FaBzggCwajclbDao {
-    /**
-     * 获取单条记录
-     * @param requestID
-     * @return
-     */
-    List<FaBzggCwajclb> getByRequestID(@Param("requestID") String requestID);
-
+public interface FaBzggCwajclbDao extends BaseDao<FaBzggCwajclb> {
     /**
      * 获取公告校验池异常总数
      * @return
      */
-    Integer getAnnouncementCheckPoolExceptionCount();
+    Integer getAnnouncementCheckPoolErrorCount();
 
     /**
      * 获取公告池异常总数
      * @return
      */
-    Integer getAnnouncementPoolExceptionCount();
+    Integer getAnnouncementPoolErrorCount();
 
     /**
-     * 根据申请号删除数据
+     * 获取公告池异常申请号序列
+     * @return
+     */
+    List<String> listAnnouncementPoolErrorRequestID();
+
+    /**
+     * 插入一条错误数据
      * @param requestID
      */
-    void deleteByRequest(@Param("requestID") String requestID);
+    void insertOneByRequestID(@Param("requestID") String requestID,
+                              @Param("content") String content,
+                              @Param("errorType") String errorType);
+
+    /**
+     * 根据错误描述查询案件总量
+     * @param error
+     * @return
+     */
+    Integer getAnnouncementCheckNotPassCountByError(@Param("error") String error);
 }

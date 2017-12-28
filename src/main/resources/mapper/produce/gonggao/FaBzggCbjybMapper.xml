@@ -26,16 +26,51 @@
         <result column="modname" property="modname" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaBzggCbjybResultMap" parameterType="java.lang.String">
-        SELECT *
+    <select id="listByRequestID" resultMap="FaBzggCbjybResultMap" parameterType="java.lang.String">
+        SELECT FA_BZGG_CBJYB_ID, FA_BZGG_GGAJZTJK_ID, SHENQINGR, SHENQINGH, ZHUANLILX, ZHUFENLEIH, GONGGAOZT,
+               YUGUGGR, BANDENGFWR, JINRUJYCSJ, SONGFENLSJ, FENLEIWCSJ, FENLEIWCBJ, ZHULUXMTQBJ, ZHULUXMTQWCSJ,
+               GONGBAODTQBJ, GONGBAODTQWCSJ, JIAODUIJL, JIAODUIJGFHSJ, REGNAME, REGTIME, MODNAME, MODTIME
           FROM FA_BZGG_CBJYB_2
          WHERE SHENQINGH = #{requestID}
     </select>
 
-    <update id="updateStatusAndConclusion" parameterType="java.lang.String">
+    <update id="updateStatusAndConclusionByRequestID" parameterType="java.lang.String">
         UPDATE FA_BZGG_CBJYB_2 JY
            SET JY.GONGGAOZT = #{status}, JY.JIAODUIJL = #{conclusion}
          WHERE JY.SHENQINGH = #{requestID}
     </update>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_BZGG_CBJYB_2 WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <insert id="insertOneFrom_FABZGGCBJBYLS_ByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_BZGG_CBJYB_2
+          SELECT FA_BZGG_CBJYB_SEQ.NEXTVAL,
+                 FA_BZGG_GGAJZTJK_ID,
+                 SHENQINGR,
+                 SHENQINGH,
+                 ZHUANLILX,
+                 ZHUFENLEIH,
+                 GONGGAOZT,
+                 YUGUGGR,
+                 BANDENGFWR,
+                 JINRUJYCSJ,
+                 SONGFENLSJ,
+                 FENLEIWCSJ,
+                 FENLEIWCBJ,
+                 ZHULUXMTQBJ,
+                 ZHULUXMTQWCSJ,
+                 GONGBAODTQBJ,
+                 GONGBAODTQWCSJ,
+                 JIAODUIJL,
+                 JIAODUIJGFHSJ,
+                 REGNAME,
+                 REGTIME,
+                 MODNAME,
+                 MODTIME
+            FROM FA_BZGG_CBJYB_LS_2
+           WHERE SHENQINGH = #{requestID}
+    </insert>
 
 </mapper>

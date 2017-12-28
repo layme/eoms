@@ -1,5 +1,6 @@
 package com.gwssi.eoms.dao.produce.gonggao;
 
+import com.gwssi.eoms.dao.produce.BaseDao;
 import com.gwssi.eoms.model.domain.produce.gonggao.FaBzggCbjbyLs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,13 +13,10 @@ import java.util.List;
  */
 @Mapper
 @Component(value = "faBzggCbjbyLsDao")
-public interface FaBzggCbjbyLsDao {
+public interface FaBzggCbjbyLsDao extends BaseDao<FaBzggCbjbyLs> {
     /**
-     * 根据申请号查询案件列表
+     * 出版社校验表转历史
      * @param requestID
-     * @return
      */
-    List<FaBzggCbjbyLs> getByRequestID(@Param("requestID") String requestID);
-
-    void deleteByRequestID(@Param("requestID") String requestID);
+    void insertOneFrom_FABZGGCBJYB_ByRequestID(@Param("requestID") String requestID);
 }

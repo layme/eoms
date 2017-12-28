@@ -31,16 +31,55 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaBzggGgajztjkResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_BZGG_GGAJZTJK
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaBzggGgajztjkResultMap" parameterType="java.lang.String">
+        SELECT FA_BZGG_GGAJZTJK_ID, SHENQINGH, ZHUANLILX, SHENQINGR, GONGGAOZT, YUGUGGR, GONGGAOR, ZHUFENLEIH,
+               BANDENGFWR, JINRUJYCSJ, JIAOYANWCSJ, JIAOYANWCBJ, JINRUGGCSJ, GONGGAOWCSJ, GONGGAOWCBJ, FENLEIWCSJ,
+               FENLEIWCBJ, NIANDENGYFJNR, SHIFANGTZSFWR, CHUSHENYXM, SHISHENYXM, CHUSHENYBM, SHISHENYBM, REGNAME,
+               REGTIME, MODNAME, MODTIME
+          FROM FA_BZGG_GGAJZTJK
+         WHERE SHENQINGH = #{requestID}
     </select>
 
-    <update id="updateStatusByRequestID" parameterType="java.lang.String">
+    <update id="updateStatusAndPubDateByRequestID" parameterType="java.lang.String">
         UPDATE FA_BZGG_GGAJZTJK JK
            SET JK.GONGGAOZT = #{status}, JK.GONGGAOR = #{pubDate}
          WHERE JK.SHENQINGH = #{requestID}
     </update>
+
+    <select id="getWaitFeeCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM FA_BZGG_GGAJZTJK JK, GG_ZLX_ZHU U
+         WHERE JK.SHENQINGH = U.SHENQINGH
+           AND U.ANJIANYWZT = 'S090102'
+           AND U.YOUXIAOBJ = '0'
+           AND U.ZHONGZHIBJ = '0'
+           AND U.ZANTINGBJ = '0'
+           AND U.GUAQIBJ = '0'
+           AND U.SUODINGBJ = '0'
+           AND JK.GONGGAOZT = '20'
+           AND EXISTS
+           (SELECT 1
+              FROM GG_FY_DSXFYJLB B
+             WHERE B.FEIYONGZLDM = '20761581515151'
+               AND B.SHENQINGH = JK.SHENQINGH)
+    </select>
+
+    <select id="getWaitAnnouncementCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM GG_ZLX_ZHU U, FA_BZGG_GGAJZTJK JK
+          LEFT JOIN GG_FY_YSXFYJLB B
+            ON B.SHENQINGH = JK.SHENQINGH
+           AND B.FEIYONGZLDM = '20761581515151'
+         WHERE JK.SHENQINGH = U.SHENQINGH
+           AND SUBSTR(U.ANJIANYWZT, 0, 4) NOT IN
+               ('S110', '1791', 'S050', '1302', '9101')
+           AND U.ANJIANYWZT &lt;&gt; '其他失效'
+           AND U.YOUXIAOBJ = '0'
+           AND U.ZHONGZHIBJ = '0'
+           AND U.ZANTINGBJ = '0'
+           AND U.GUAQIBJ = '0'
+           AND U.SUODINGBJ = '0'
+           AND JK.GONGGAOZT = '9'
+    </select>
 
 </mapper>

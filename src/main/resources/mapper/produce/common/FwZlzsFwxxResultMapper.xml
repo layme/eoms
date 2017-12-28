@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.FwZlzsFwxxDao">
+    <resultMap id="FwZlzsFwxxResultMapper" type="com.gwssi.eoms.model.domain.produce.common.FwZlzsFwxx">
+        <result column="fw_zlzs_fwxx_id" property="fw_zlzs_fwxx_id" jdbcType="DOUBLE"/>
+        <result column="zhengshufwxlh" property="zhengshufwxlh" jdbcType="VARCHAR"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="renwulsh" property="renwulsh" jdbcType="DOUBLE"/>
+        <result column="fw_gg_jjbdxx_id" property="fw_gg_jjbdxx_id" jdbcType="DOUBLE"/>
+        <result column="zhuanlilx" property="zhuanlilx" jdbcType="VARCHAR"/>
+        <result column="zhengshuh" property="zhengshuh" jdbcType="VARCHAR"/>
+        <result column="wenjiancflj" property="wenjiancflj" jdbcType="VARCHAR"/>
+        <result column="zhengshuyid" property="zhengshuyid" jdbcType="VARCHAR"/>
+        <result column="haomalx" property="haomalx" jdbcType="VARCHAR"/>
+        <result column="guahaohm" property="guahaohm" jdbcType="VARCHAR"/>
+        <result column="dayinfs" property="dayinfs" jdbcType="DOUBLE"/>
+        <result column="fawenrq" property="fawenrq" jdbcType="VARCHAR"/>
+        <result column="dayinrq" property="dayinrq" jdbcType="VARCHAR"/>
+        <result column="qingqiurq" property="qingqiurq" jdbcType="VARCHAR"/>
+        <result column="leixing" property="leixing" jdbcType="VARCHAR"/>
+        <result column="zhengshuyys" property="zhengshuyys" jdbcType="DOUBLE"/>
+        <result column="zhuanlizszl" property="zhuanlizszl" jdbcType="VARCHAR"/>
+        <result column="chongxinfwrq" property="chongxinfwrq" jdbcType="VARCHAR"/>
+        <result column="bumendm" property="bumendm" jdbcType="VARCHAR"/>
+        <result column="chushidm" property="chushidm" jdbcType="VARCHAR"/>
+        <result column="shenchaydm" property="shenchaydm" jdbcType="VARCHAR"/>
+        <result column="dailijgdm" property="dailijgdm" jdbcType="VARCHAR"/>
+        <result column="dailijgmc" property="dailijgmc" jdbcType="VARCHAR"/>
+        <result column="fawenfs" property="fawenfs" jdbcType="VARCHAR"/>
+        <result column="shoujianssmc" property="shoujianssmc" jdbcType="VARCHAR"/>
+        <result column="shoujianrxm" property="shoujianrxm" jdbcType="VARCHAR"/>
+        <result column="shoujianrdz" property="shoujianrdz" jdbcType="VARCHAR"/>
+        <result column="shoujianyzbm" property="shoujianyzbm" jdbcType="VARCHAR"/>
+        <result column="leixingbs" property="leixingbs" jdbcType="VARCHAR"/>
+        <result column="beizu" property="beizu" jdbcType="VARCHAR"/>
+        <result column="chejianzt" property="chejianzt" jdbcType="VARCHAR"/>
+        <result column="zhengshuzt" property="zhengshuzt" jdbcType="VARCHAR"/>
+        <result column="chuangjianrdm" property="chuangjianrdm" jdbcType="VARCHAR"/>
+        <result column="chuangjiansj" property="chuangjiansj" jdbcType="VARCHAR"/>
+        <result column="xiugairdm" property="xiugairdm" jdbcType="VARCHAR"/>
+        <result column="xiugaisj" property="xiugaisj" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="fw_zlzs_zsfsxx_id" property="fw_zlzs_zsfsxx_id" jdbcType="VARCHAR"/>
+        <result column="chubansfsbj" property="chubansfsbj" jdbcType="VARCHAR"/>
+        <result column="jiuzhengbj" property="jiuzhengbj" jdbcType="VARCHAR"/>
+        <result column="juanqih" property="juanqih" jdbcType="VARCHAR"/>
+        <result column="zusebj" property="zusebj" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getPostOfficeHaveAnnouncementDataCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM FW_ZLZS_FWXX XX
+         WHERE XX.LEIXING = '01'
+           AND XX.CHEJIANZT = '01'
+           AND XX.FAWENRQ &gt; #{sendDate}
+           AND NOT EXISTS
+           (SELECT * FROM FA_BZGG_BFZSB B WHERE B.SHENQINGH = XX.SHENQINGH)
+    </select>
+</mapper>

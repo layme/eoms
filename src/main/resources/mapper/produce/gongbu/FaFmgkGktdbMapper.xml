@@ -25,10 +25,47 @@
         <result column="shujutqsj" property="shujutqsj" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaFmgkGktdbResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_FMGK_GKTDB
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaFmgkGktdbResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_GKTDB_ID, SHENQINGH, JUANQIH, GONGKAIR, GONGKAITDR, DAOQIR, GONGKAILXBM, JIAODUIZT, FENLEIWCBJ,
+               SHIFOUWTAJ, ZHUANZHENGC, TIDANGCZY, CAOZUOSJ, REGNAME, REGTIME, MODNAME, MODTIME, QUERENZT, GONGGAOZT,
+               SHUJUTQBJ, SHUJUTQSJ
+          FROM FA_FMGK_GKTDB
+         WHERE SHENQINGH = #{requestID}
     </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_FMGK_GKTDB WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <insert id="insertOneByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_FMGK_GKTDB A6
+          SELECT S_FA_FMGK_GKTDB.NEXTVAL,
+                 A1.SHENQINGH,
+                 '',
+                 A1.GONGGAOR,
+                 '',
+                 A1.DAOQIR,
+                 '2',
+                 '2',
+                 '1',
+                 '',
+                 '2',
+                 '',
+                 '',
+                 A1.REGNAME,
+                 A1.REGTIME,
+                 A1.MODNAME,
+                 A1.MODTIME,
+                 '0',
+                 A1.GONGGAOZT,
+                 '',
+                 ''
+            FROM FA_FMGK_GKAJZTJK A1
+           INNER JOIN FA_FMGK_CBJYB_LS_2 A3
+              ON A1.SHENQINGH = A3.SHENQINGH
+           INNER JOIN FA_FMGK_JDB_LS AA
+              ON A1.SHENQINGH = AA.SHENQINGH
+           WHERE A1.SHENQINGH = #{requestID}
+    </insert>
 
 </mapper>

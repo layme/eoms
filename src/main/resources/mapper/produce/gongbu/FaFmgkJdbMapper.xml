@@ -18,10 +18,39 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaFmgkJdbResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM fA_FMGK_JDB
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaFmgkJdbResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_JDB_ID, SHENQINGH, JIAODUIJL, JIAODUIJLMS, JINRUJDSJ, JIAODUIKSSJ, JIAODUIJSSJ, JIAODUIWCSJ,
+               RENLINGR, RENLINGRCSDM, REGNAME, REGTIME, MODNAME, MODTIME
+          FROM FA_FMGK_JDB
+         WHERE SHENQINGH = #{requestID}
     </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_FMGK_JDB WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <update id="updateConclusionByRequestID" parameterType="java.lang.String">
+        UPDATE FA_FMGK_JDB JD SET JD.JIAODUIJL = #{conclusion} WHERE JD.SHENQINGH = #{requestID}
+    </update>
+
+    <insert id="insertOneFrom_FAFMGKJDBLS_ByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_FMGK_JDB
+          SELECT FA_FMGK_JDB_SEQ.NEXTVAL,
+                 A3.SHENQINGH,
+                 A3.JIAODUIJL,
+                 A3.JIAODUIJLMS,
+                 A3.JINRUJDSJ,
+                 A3.JIAODUIKSSJ,
+                 A3.JIAODUIJSSJ,
+                 '',
+                 A3.RENLINGR,
+                 A3.RENLINGRCSDM,
+                 A3.REGNAME,
+                 A3.REGTIME,
+                 A3.MODNAME,
+                 A3.MODTIME
+            FROM FA_FMGK_JDB_LS A3
+           WHERE A3.SHENQINGH = #{requestID}
+    </insert>
 
 </mapper>

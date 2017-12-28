@@ -29,33 +29,107 @@
         <result column="renlingr" property="renlingr" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaFmgkCwajclbResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_FMGK_CWAJCLB
-        WHERE SHENQINGH = #{requestID}
+    <resultMap id="ErrorCountVOResultMap" type="com.gwssi.eoms.model.vo.common.ErrorCountVO">
+        <result column="ERROR" property="error" jdbcType="VARCHAR"/>
+        <result column="NUM" property="count" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listByRequestID" resultMap="FaFmgkCwajclbResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_CWAJCLB_ID, FA_FMGK_GGAJZTJK_ID, SHENQINGH, SHENQINGR, PCTBJ, GONGGAOZT, ZHUFENLEIH, YUGUGGR,
+               GONGGAOR, BANDENGFWR, JINRUJYCSJ, JINRUGGSJ, CUOWUJRSJ, CUOWUMS, CUOWUZL, CHUSHENYXM, SHISHENYXM,
+               CHUSHENYBM, SHUSHENYBM, REGNAME, REGTIME, MODNAME, MODTIME, CHULIZT, RENLINGR
+          FROM FA_FMGK_CWAJCLB
+         WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--公布校验池异常总数-->
-    <select id="getPublishCheckPoolExceptionCount" resultType="java.lang.Integer">
+    <select id="getPublishCheckPoolErrorCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
-        FROM FA_FMGK_CWAJCLB CW
-        LEFT JOIN ZPT_YHQXGL_YH YH
-        ON CW.CHUSHENYXM = YH.YONGHUZH
-        LEFT JOIN FA_FMGK_JDB JDB
-        ON CW.SHENQINGH = JDB.SHENQINGH, FA_FMGK_CBJYB_2 JY
-        WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
-        AND CW.SHENQINGH = JY.SHENQINGH
-        AND CW.GONGGAOZT IN ('4', '5')
+          FROM FA_FMGK_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('4', '5')
     </select>
 
     <!--公布池异常总数-->
-    <select id="getPublishPoolExceptionCount" resultType="java.lang.Integer">
+    <select id="getPublishPoolErrorCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
-        FROM FA_FMGK_CWAJCLB CW, FA_FMGK_GKTDB TDB, FA_FMGK_GKAJZTJK JK
-        WHERE TDB.SHENQINGH = CW.SHENQINGH
-        AND CW.SHENQINGH = JK.SHENQINGH
-        AND CW.CUOWUZL IN ('5', '6', '7')
-        AND TDB.QUERENZT != '1'
+          FROM FA_FMGK_CWAJCLB CW, FA_FMGK_GKTDB TDB
+         WHERE TDB.SHENQINGH = CW.SHENQINGH
+           AND CW.CUOWUZL IN ('5', '6', '7')
+           AND TDB.QUERENZT != '1'
+    </select>
+
+    <!--根据申请号删除记录-->
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_FMGK_CWAJCLB WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <!--根据申请号插入一条记录-->
+    <insert id="insertOneByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_FMGK_CWAJCLB
+          SELECT FA_FMGK_CWAJCLB_SEQ.NEXTVAL,
+                 A1.FA_FMGK_GGAJZTJK_ID,
+                 A1.SHENQINGH,
+                 A1.SHENQINGR,
+                 A1.PCTBJ,
+                 A1.GONGGAOZT,
+                 A1.ZHUFENLEIH,
+                 A1.YUGUGGR,
+                 A1.GONGGAOR,
+                 '',
+                 A1.JINRUJYCSJ,
+                 A1.JINRUGGCSJ,
+                 '',
+                 #{content},
+                 #{errorType},
+                 A1.CHUSHENYXM,
+                 NULL,
+                 A1.CHUSHENYBM,
+                 NULL,
+                 A1.REGNAME,
+                 A1.REGTIME,
+                 A1.MODNAME,
+                 A1.MODTIME,
+                 NULL,
+                 NULL
+            FROM FA_FMGK_GKAJZTJK A1
+           WHERE A1.SHENQINGH = #{requestID}
+    </insert>
+
+    <!--查询错误分组情况-->
+    <select id="listErrorCountVO" resultMap="ErrorCountVOResultMap">
+        SELECT CW.CUOWUMS ERROR, COUNT(1) NUM
+          FROM FA_FMGK_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('4', '5')
+         GROUP BY CW.CUOWUMS
+    </select>
+
+    <!--根据错误描述查询申请号-->
+    <select id="listRequestIDByError" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT CW.SHENQINGH
+          FROM FA_FMGK_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('4', '5')
+           AND CW.CUOWUMS = #{error}
+    </select>
+
+    <!--根据错误描述获取错误案件总量-->
+    <select id="getPublishCheckNotPassCountByError" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(1)
+          FROM FA_FMGK_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('6', '7')
+           AND CW.CUOWUMS = #{error}
+    </select>
+
+    <!--根据错误描述获取错误案件列表-->
+    <select id="listPublishCheckNotPassCountByError" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT CW.SHENQINGH
+          FROM FA_FMGK_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('6', '7')
+           AND CW.CUOWUMS = #{error}
     </select>
 
 </mapper>

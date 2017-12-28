@@ -86,13 +86,20 @@
         <result column="zhuangtaimc" property="status" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="PublishNoticeSuccessAndLoseVOResultMap" type="com.gwssi.eoms.model.vo.PublishNoticeSuccessAndLoseVO">
+    <resultMap id="PublishNoticeSuccessAndLoseVOResultMap" type="com.gwssi.eoms.model.vo.publish.PublishNoticeSuccessAndLoseVO">
         <result column="shenqingh" property="requestID" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询案件信息-->
-    <select id="getByRequestID" resultMap="GgZlxZhuResultMap" parameterType="java.lang.String">
-        SELECT *
+    <select id="listByRequestID" resultMap="GgZlxZhuResultMap" parameterType="java.lang.String">
+        SELECT SHENQINGH, ZHUANLIMC, ZHUANLIYWMC, ZHUANLILX, PCTBJ, SHENQINFSBJ, DAIYIBJ, SHENQINGR, FENANTJR, GUOBIE, SHENQINGRSL,
+               FAMINGRENSL, LIANXIRBJ, WAIGUANCPLB, FENLEIHBBH, ZHUFENLH, DAILIBJ, FENANBJ, WEISHENGWBCBJ, XULIEBBJ, TIQIANGKBJ,
+               SHISHENQQBJ, YOUXIANQQTS, ZUIXIAOYXQR, BUSANGSXYXKXQSMBJ, BAOMIQQBJ, QIANZHANGHGBJ, TUPIANHGBJ, FEIYONGJHBJ, PCTFJBJ,
+               MUANBJ, ZAIXIANSQBJ, QUANLIYQXS, BAOMITXBJ, GUAQIBJ, ZANTINGBJ, ZHONGZHIBJ, SUODINGBJ, JIAKUAIBJ, SHISHENQQHGR, SHISHENSXR,
+               TIQIANGKR, FAMINGGBR, GONGKAIGGR, ZHUANLIH, ANJIANYWZT, CHONGFUSQHBZ, CHONGFUSQQBZ, YOUXIAOBJ, REGNAME, REGTIME, MODNAME,
+               MODTIME, SHOULIZKR, TONGYDFMCZBJ, XIANGSSJBJ, CHENGTCPBJ, XIANGSSJXS, CHENGTCPXS, YICZYBJ, XIANGWSQBJ, XIANGWSQSPBJ,
+               FEIZHENGCSQYSBJ, YXSCFS, ZJZDZSQSXR, SHENQINGRENFQZDXGQL, CAFBJ, YINANAJHSBJ, DIANZISQLX, DLJGNBBH, SHENGMINGWTSYZBJ,
+               ZHAIYFTH, ZHAIYAOFTZD, DZZZJSQSXR, QIANZHANGNR
           FROM GG_ZLX_ZHU
          WHERE SHENQINGH = #{requestID}
     </select>
@@ -105,7 +112,7 @@
            AND ZHU.SHENQINGH IN
                (SELECT FA_FMGK_GKQRB.SHENQINGH
                   FROM FA_FMGK_GKQRB
-                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair})
+                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate})
     </select>
 
     <!--查询失效案件的案件列表-->
@@ -123,7 +130,7 @@
            AND ZHU.SHENQINGH IN
                (SELECT FA_FMGK_GKQRB.SHENQINGH
                   FROM FA_FMGK_GKQRB
-                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair})
+                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate})
     </select>
 
     <!--查询发送成功且失效的案件列表-->
@@ -134,12 +141,16 @@
            AND ZHU.SHENQINGH IN
                (SELECT B.SHENQINGH
                   FROM FA_FMGK_GKQRB B
-                 WHERE B.GONGKAIR = #{gongkair}
+                 WHERE B.GONGKAIR = #{pubDate}
                    AND B.SHENQINGH IN
                        (SELECT GG_WJ_TZSMSB.YEWUZTBH
                           FROM GG_WJ_TZSMSB
                          WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
                            AND GG_WJ_TZSMSB.TONGZHISZT = '05'
-                          AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq})))
+                           AND GG_WJ_TZSMSB.TONGZHISSCRQ IN
+                                <foreach collection="list" item="noticeGenerationDate" index="index" open="(" separator="," close=")">
+                                  #{noticeGenerationDate}
+                                </foreach>
+                          ))
     </select>
 </mapper>

@@ -29,33 +29,80 @@
         <result column="renlingr" property="renlingr" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaBzggCwajclbResultMap" parameterType="java.lang.String">
-        SELECT *
+    <select id="listByRequestID" resultMap="FaBzggCwajclbResultMap" parameterType="java.lang.String">
+        SELECT FA_BZGG_CWAJCLB_ID, FA_BZGG_GGAJZTJK_ID, SHENQINGH, SHENQINGR, ZHUANLILX, GONGGAOZT, ZHUFENLEIH,
+               YUGUGGR, GONGGAOR, BANDENGFWR, JINRUJYCSJ, JINRUGGSJ, CUOWUJRSJ, CUOWUMX, CUOWUZL, CHUSHENYXM,
+               SHISHENYXM, CHUSHENYBM, SHUSHENYBM, REGNAME, REGTIME, MODNAME, MODTIME, CHULIZT, RENLINGR
           FROM FA_BZGG_CWAJCLB
          WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--公告校验池异常总数-->
-    <select id="getAnnouncementCheckPoolExceptionCount" resultType="java.lang.Integer">
-        select count(*)
-          from fa_bzgg_cwajclb cw
-         where cw.cuowuzl in ('1', '2', '3', '4')
-          and cw.gonggaozt in ('4', '5')
+    <select id="getAnnouncementCheckPoolErrorCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+          FROM FA_BZGG_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('4', '5')
     </select>
 
     <!--公告池异常总数-->
-    <select id="getAnnouncementPoolExceptionCount" resultType="java.lang.Integer">
-        select count(*)
-          from fa_bzgg_cwajclb cw, fa_bzgg_zsglb zsgl
-          join fa_bzgg_cbjyb_ls_2 ls
-            on ls.shenqingh = zsgl.shenqingh
-         where zsgl.shenqingh = cw.shenqingh
-           and cw.cuowuzl in ('5', '7', '6')
-           and zsgl.zhengshuzt != 06
+    <select id="getAnnouncementPoolErrorCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+          FROM FA_BZGG_CWAJCLB CW, FA_BZGG_ZSGLB ZSGL
+         WHERE ZSGL.SHENQINGH = CW.SHENQINGH
+           AND CW.CUOWUZL IN ('5', '7', '6')
+           AND ZSGL.ZHENGSHUZT != 06
     </select>
 
-    <delete id="deleteByRequest" parameterType="java.lang.String">
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
         DELETE FROM FA_BZGG_CWAJCLB WHERE SHENQINGH = #{requestID}
     </delete>
+
+    <insert id="insertOneByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_BZGG_CWAJCLB
+          SELECT FA_BZGG_CWAJCLB_SEQ.NEXTVAL,
+                 A1.FA_BZGG_GGAJZTJK_ID,
+                 A1.SHENQINGH,
+                 A1.SHENQINGR,
+                 A1.ZHUANLILX,
+                 A1.GONGGAOZT,
+                 A1.ZHUFENLEIH,
+                 A1.YUGUGGR,
+                 A1.GONGGAOR,
+                 A1.BANDENGFWR,
+                 A1.JINRUJYCSJ,
+                 A1.JINRUGGCSJ,
+                 TO_CHAR(SYSDATE, 'YYYYMMDD'),
+                 #{content},
+                 #{errorType},
+                 A1.CHUSHENYXM,
+                 A1.SHISHENYXM,
+                 A1.CHUSHENYBM,
+                 A1.SHISHENYBM,
+                 A1.REGNAME,
+                 A1.REGTIME,
+                 A1.MODNAME,
+                 A1.MODTIME,
+                 NULL,
+                 NULL
+            FROM FA_BZGG_GGAJZTJK A1
+           WHERE A1.SHENQINGH = #{requestID}
+    </insert>
+
+    <select id="listAnnouncementPoolErrorRequestID" resultType="java.lang.String">
+        SELECT CW.SHENQINGH
+          FROM FA_BZGG_CWAJCLB CW, FA_BZGG_ZSGLB ZSGL
+         WHERE ZSGL.SHENQINGH = CW.SHENQINGH
+           AND CW.CUOWUZL IN ('5', '7', '6')
+           AND ZSGL.ZHENGSHUZT != 06
+    </select>
+
+    <select id="getAnnouncementCheckNotPassCountByError" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(1)
+          FROM FA_BZGG_CWAJCLB CW
+         WHERE CW.CUOWUZL IN ('1', '2', '3', '4')
+           AND CW.GONGGAOZT IN ('6', '7')
+           AND CW.CUOWUMX = #{error}
+    </select>
 
 </mapper>

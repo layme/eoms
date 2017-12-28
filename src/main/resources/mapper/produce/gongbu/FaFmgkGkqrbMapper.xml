@@ -25,43 +25,53 @@
     </resultMap>
 
     <!--查询案件-->
-    <select id="getByRequestID" resultMap="FaFmgkGkqrbResultMap" parameterType="java.lang.String">
-        SELECT *
+    <select id="listByRequestID" resultMap="FaFmgkGkqrbResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_GKQRB_ID, SHENQINGH, JUANQIH, GONGKAIR, GONGKAITDR, DAOQIR, GONGKAILXBM, JIAODUIZT, FENLEIWCBJ,
+               SHIFOUWTAJ, ZHUANZHENGC, CHEJIANBS, TIDANGCZY, CAOZUOSJ, SHENCHAYDM, GONGKAIQRSJ, REGNAME, REGTIME,
+               MODNAME, MODTIME
           FROM FA_FMGK_GKQRB
          WHERE SHENQINGH = #{requestID}
     </select>
 
     <!--查询待公布案件总数-->
     <select id="getPublishNoticeAllCount" resultType="java.lang.Integer" parameterType="java.lang.String">
-        SELECT COUNT(1)
+        SELECT COUNT(*)
           FROM FA_FMGK_GKQRB
-         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}
+         WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate}
     </select>
 
     <!--查询成功公布的案件总数-->
     <select id="getPublishNoticeSuccessCount" resultType="java.lang.Integer" parameterType="java.lang.String">
-        SELECT COUNT(1)
+        SELECT COUNT(*)
           FROM FA_FMGK_GKQRB B
-         WHERE B.GONGKAIR = #{gongkair}
+         WHERE B.GONGKAIR = #{pubDate}
            AND B.SHENQINGH IN
                (SELECT GG_WJ_TZSMSB.YEWUZTBH
                   FROM GG_WJ_TZSMSB
                  WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
            AND GG_WJ_TZSMSB.TONGZHISZT = '05'
-           AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq}))
+           AND GG_WJ_TZSMSB.TONGZHISSCRQ IN
+                <foreach collection="list" item="noticeGenerationDate" index="index" open="(" separator="," close=")">
+                  #{noticeGenerationDate}
+                </foreach>
+           )
     </select>
 
     <!--查询发送失败的公布案件总数-->
     <select id="getPublishNoticeFailureCount" resultType="java.lang.Integer" parameterType="java.lang.String">
-        SELECT COUNT(1)
+        SELECT COUNT(*)
           FROM FA_FMGK_GKQRB
-         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}
+         WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate}
            AND FA_FMGK_GKQRB.SHENQINGH NOT IN
                (SELECT GG_WJ_TZSMSB.YEWUZTBH
                   FROM GG_WJ_TZSMSB
                  WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
                    AND GG_WJ_TZSMSB.TONGZHISZT = '05'
-                   AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq}))
+                   AND GG_WJ_TZSMSB.TONGZHISSCRQ IN
+                        <foreach collection="list" item="noticeGenerationDate" index="index" open="(" separator="," close=")">
+                          #{noticeGenerationDate}
+                        </foreach>
+                   )
            AND FA_FMGK_GKQRB.SHENQINGH NOT IN
                (SELECT ZHU.SHENQINGH
                   FROM GG_ZLX_ZHU ZHU
@@ -69,20 +79,24 @@
                    AND ZHU.SHENQINGH IN
                        (SELECT FA_FMGK_GKQRB.SHENQINGH
                           FROM FA_FMGK_GKQRB
-                         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}))
+                         WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate}))
     </select>
 
     <!--查询发送失败的公布案件列表-->
     <select id="getPublishNoticeFailureList" resultType="java.lang.String" parameterType="java.lang.String">
         SELECT SHENQINGH
           FROM FA_FMGK_GKQRB
-         WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}
+         WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate}
            AND FA_FMGK_GKQRB.SHENQINGH NOT IN
                (SELECT GG_WJ_TZSMSB.YEWUZTBH
                   FROM GG_WJ_TZSMSB
                  WHERE GG_WJ_TZSMSB.TONGZHISLX IN ('210305', '210308')
                    AND GG_WJ_TZSMSB.TONGZHISZT = '05'
-                   AND GG_WJ_TZSMSB.TONGZHISSCRQ IN (#{tongzhisscrq}))
+                   AND GG_WJ_TZSMSB.TONGZHISSCRQ IN
+                        <foreach collection="list" item="noticeGenerationDate" index="index" open="(" separator="," close=")">
+                          #{noticeGenerationDate}
+                        </foreach>
+                   )
                    AND FA_FMGK_GKQRB.SHENQINGH NOT IN
                        (SELECT ZHU.SHENQINGH
                           FROM GG_ZLX_ZHU ZHU
@@ -90,6 +104,43 @@
                            AND ZHU.SHENQINGH IN
                                (SELECT FA_FMGK_GKQRB.SHENQINGH
                                   FROM FA_FMGK_GKQRB
-                                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{gongkair}))
+                                 WHERE FA_FMGK_GKQRB.GONGKAIR = #{pubDate}))
     </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_FMGK_GKQRB WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <insert id="insertOneByRequestIDFrom_JK_TDB" parameterType="java.lang.String">
+        INSERT INTO FA_FMGK_GKQRB
+          SELECT JK.FA_FMGK_GGAJZTJK_ID,
+                 JK.SHENQINGH,
+                 '',
+                 JK.GONGGAOR,
+                 TD.GONGKAITDR,
+                 '',
+                 TD.GONGKAILXBM,
+                 TD.JIAODUIZT,
+                 JK.FENLEIWCBJ,
+                 TD.SHIFOUWTAJ,
+                 TD.ZHUANZHENGC,
+                 '',
+                 TD.TIDANGCZY,
+                 TD.CAOZUOSJ,
+                 '',
+                 '',
+                 '',
+                 '',
+                 '',
+                 ''
+            FROM FA_FMGK_GKAJZTJK JK
+            LEFT JOIN FA_FMGK_GKTDB TD
+              ON TD.SHENQINGH = JK.SHENQINGH
+           WHERE JK.SHENQINGH = #{requestID}
+    </insert>
+
+    <update id="updatePubDateFromPubList" parameterType="java.lang.String">
+        UPDATE FA_FMGK_GKQRB SET GONGKAIR = #{pubDate} WHERE SHENQINGH = #{requestID}
+    </update>
+
 </mapper>

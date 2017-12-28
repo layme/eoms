@@ -1,5 +1,6 @@
 package com.gwssi.eoms.dao.produce.common;
 
+import com.gwssi.eoms.dao.produce.BaseDao;
 import com.gwssi.eoms.model.domain.produce.common.WfWfentry;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,14 +13,7 @@ import java.util.List;
  */
 @Mapper
 @Component(value = "wfWfentryDao")
-public interface WfWfentryDao {
-    /**
-     * 根据申请号获取当前工作流信息
-     * @param requestID
-     * @return
-     */
-    WfWfentry getByRequestID(@Param("requestID") String requestID);
-
+public interface WfWfentryDao extends BaseDao<WfWfentry> {
     /**
      * 批量删除申请号指定的工作流程段
      * @param list

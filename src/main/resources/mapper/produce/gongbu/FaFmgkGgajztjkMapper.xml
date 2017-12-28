@@ -30,12 +30,81 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaFmgkGkajztjkResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_FMGK_GGAJZTJK
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaFmgkGkajztjkResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_GGAJZTJK_ID, SHENQINGH, SHENQINGR, DAOQIR, PCTBJ, ZUIXIAOYXQR, TIQIANGKSXR, CANSHENHGFWR,
+               GONGGAOZT, YUGUGGR, GONGGAOR, ZHUFENLEIH, JINRUJYCSJ, JIAOYANWCSJ, JIAOYANWCBJ, JINRUGGCSJ, GONGGAOWCSJ,
+               GONGGAOWCBJ, FENLEIWCSJ, FENLEIWCBJ, CHUSHENYXM, CHUSHENYBM, REGNAME, REGTIME, MODNAME, MODTIME
+          FROM FA_FMGK_GKAJZTJK
+         WHERE SHENQINGH = #{requestID}
     </select>
 
+    <update id="updateStatusAndPubDateByRequestID" parameterType="java.lang.String">
+        UPDATE FA_FMGK_GKAJZTJK JK
+           SET JK.GONGGAOZT = #{status}, JK.GONGGAOR = #{pubDate}
+         WHERE JK.SHENQINGH = #{requestID}
+    </update>
 
+    <select id="getWaitPublishIsNullCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM FA_FMGK_GKAJZTJK JK, GG_ZLX_ZHU U
+         WHERE JK.GONGGAOZT = '20'
+           AND U.SHENQINGH = JK.SHENQINGH
+           AND SUBSTR(U.ANJIANYWZT, 1, 4) NOT IN
+           ('S110', '1791', 'S050', '1302', '9101')
+           AND U.ANJIANYWZT &lt;&gt; '其他失效'
+           AND U.YOUXIAOBJ = '0'
+           AND U.ZHONGZHIBJ = '0'
+           AND U.ZANTINGBJ = '0'
+           AND U.GUAQIBJ = '0'
+           AND U.SUODINGBJ = '0'
+           AND NOT EXISTS
+           (SELECT 1 FROM FA_FMGK_DGGAJB B WHERE B.SHENQINGH = JK.SHENQINGH)
+    </select>
+
+    <select id="getOnlyAdvanceMarkCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM GG_ZLX_ZHU U
+         WHERE SUBSTR(U.ANJIANYWZT, 0, 4) NOT IN
+               ('S110', '1791', 'S050', '1302', '9101')
+               AND U.ANJIANYWZT &lt;&gt; '其他失效'
+               AND U.YOUXIAOBJ = '0'
+               AND U.ZHONGZHIBJ = '0'
+               AND U.ZANTINGBJ = '0'
+               AND U.GUAQIBJ = '0'
+               AND U.SUODINGBJ = '0'
+               AND U.TIQIANGKBJ = '1'
+               AND U.TIQIANGKR IS NULL
+               AND EXISTS
+               (SELECT 1 FROM FA_FMGK_GKAJZTJK JK WHERE JK.SHENQINGH = U.SHENQINGH)
+    </select>
+
+    <select id="getBookConcernHavePubDataCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM T_PUB_LIST@TO_CHUBANSHE T
+         WHERE T.PUBTYPE = 'FMGB'
+           AND NOT EXISTS (SELECT 1
+                             FROM FA_FMGK_GKAJZTJK JK
+                            WHERE JK.SHENQINGH = T.AN
+                              AND JK.GONGGAOZT IN ('10', '15'))
+    </select>
+
+    <select id="getAdvanceDatePassedCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM GG_ZLX_ZHU U, FA_FMGK_GKAJZTJK JK
+         WHERE JK.SHENQINGH = U.SHENQINGH
+           AND JK.GONGGAOZT IN ('8', '9', '11')
+           AND SUBSTR(U.ANJIANYWZT, 0, 4) NOT IN
+               ('S110', '1791', 'S050', '1302', '9101')
+           AND U.ANJIANYWZT &lt;&gt; '其他失效'
+           AND U.YOUXIAOBJ = '0'
+           AND U.ZHONGZHIBJ = '0'
+           AND U.ZANTINGBJ = '0'
+           AND U.GUAQIBJ = '0'
+           AND U.SUODINGBJ = '0'
+           AND U.TIQIANGKBJ = '1'
+           AND U.TIQIANGKR &lt; TO_CHAR(SYSDATE, 'YYYYMMDD')
+           AND NOT EXISTS
+           (SELECT 1 FROM FA_FMGK_GKQRB QR WHERE QR.SHENQINGH = U.SHENQINGH)
+    </select>
 
 </mapper>

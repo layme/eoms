@@ -1,9 +1,16 @@
 package com.gwssi.eoms.model.domain.produce.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 通知书描述表
  * Created by admin on 2017/10/24.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GgWjTzsmsb {
     private Double rid;  // 主键
     private String zhutilx;  // 主体类型

@@ -29,10 +29,54 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaFmgkCbjybResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_FMGK_CBJYB_2
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaFmgkCbjybResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_CBJYB_ID, FA_FMGK_GGAJZTJK_ID, SHENQINGR, SHENQINGH, PCTBJ, ZUIXIAOYXQR, TIQIANGKSXR,
+               ZHUFENLEIH, GONGGAOZT, YUGUGGR, CANSHENHGFWR, JINRUJYCSJ, SONGFENLSJ, FENLEIWCSJ, FENLEIWCBJ,
+               ZHULUXMTQBJ, ZHULUXMTQWCSJ, GONGBAODTQBJ, GONGBAODTQWCSJ, JIAODUIJL, JIAODUIJGFHSJ, REGNAME,
+               REGTIME, MODNAME, MODTIME
+          FROM FA_FMGK_CBJYB_2
+         WHERE SHENQINGH = #{requestID}
     </select>
+
+    <update id="updateStatusAndConclusionByRequestID" parameterType="java.lang.String">
+        UPDATE FA_FMGK_CBJYB_2 JY
+           SET JY.GONGGAOZT = #{status}, JY.JIAODUIJL = #{conclusion}
+         WHERE JY.SHENQINGH = #{requestID}
+    </update>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_FMGK_CBJYB_2 WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <insert id="insertOneFrom_FAFMGKCBJYBLS_ByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_FMGK_CBJYB_2
+          SELECT FA_FMGK_CBJYB_2_SEQ.NEXTVAL,
+                 A.FA_FMGK_GGAJZTJK_ID,
+                 A.SHENQINGR,
+                 A.SHENQINGH,
+                 '0',
+                 '',
+                 '',
+                 A.ZHUFENLEIH,
+                 A.GONGGAOZT,
+                 A.YUGUGGR,
+                 A.CANSHENHGFWR,
+                 A.JINRUJYCSJ,
+                 A.SONGFENLSJ,
+                 A.FENLEIWCSJ,
+                 A.FENLEIWCBJ,
+                 A.ZHULUXMTQBJ,
+                 A.ZHULUXMTQWCSJ,
+                 A.GONGBAODTQBJ,
+                 A.GONGBAODTQWCSJ,
+                 A.JIAODUIJL,
+                 A.JIAODUIJGFHSJ,
+                 A.REGNAME,
+                 A.REGTIME,
+                 A.MODNAME,
+                 A.MODTIME
+            FROM FA_FMGK_CBJYB_LS_2 A
+           WHERE A.SHENQINGH = #{requestID}
+    </insert>
 
 </mapper>

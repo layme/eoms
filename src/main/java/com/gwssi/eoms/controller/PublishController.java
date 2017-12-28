@@ -1,18 +1,19 @@
 package com.gwssi.eoms.controller;
 
-import com.gwssi.eoms.model.dto.PublishNoticeLoseDTO;
-import com.gwssi.eoms.model.vo.PublishNoticeDataVO;
-import com.gwssi.eoms.model.vo.PublishNoticeRepairResultVO;
-import com.gwssi.eoms.model.vo.PublishNoticeSuccessAndLoseVO;
-import com.gwssi.eoms.service.PublishNoticeService;
+import com.gwssi.eoms.model.vo.common.ErrorCountVO;
+import com.gwssi.eoms.model.vo.common.ErrorFixResultVO;
+import com.gwssi.eoms.model.vo.publish.PublishDataMapVO;
+import com.gwssi.eoms.service.publish.PublishCheckErrorFixService;
+import com.gwssi.eoms.service.publish.PublishDataMapService;
+import com.gwssi.eoms.service.publish.PublishMonitorFixService;
+import com.gwssi.eoms.util.RestResult;
+import com.gwssi.eoms.util.RestResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,45 +24,65 @@ import java.util.List;
  * Description: 公布控制器
  */
 @RestController
+@RequestMapping(value = "/api/publish")
 public class PublishController {
+    /*******************************************************************************************************************
+     * 1 以下为【数据分布图】功能区
+     ******************************************************************************************************************/
     @Autowired
-    PublishNoticeService publishNoticeService;
+    PublishDataMapService publishDataMapService;
 
-    /**
-     * 获取公布公布及的应发总数，成功数，失败数，失效数
-     * @param publishDate
-     * @param noticeGenerationDate
-     * @return
-     */
-    @RequestMapping(value = "/api/getPublishNoticeData", method = RequestMethod.GET)
-    public PublishNoticeDataVO getPublishNoticeData(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
-        return publishNoticeService.getPublishNoticeData(publishDate, noticeGenerationDate.replaceAll(" ", "','"));
+    @RequestMapping("/getPublishDataMap")
+    public RestResult<PublishDataMapVO> getPublishDataMap(@RequestParam(value = "requestID", required = true) String requestID) {
+        return RestResultGenerator.genSuccessResult(
+                publishDataMapService.getDataMapByRequestID(requestID)
+        );
     }
 
-    /**
-     * 获取发送成功且失效案件列表
-     * @param publishDate
-     * @param noticeGenerationDate
-     * @return
-     */
-    @RequestMapping(value = "/api/getPublishNoticeSuccessAndLoseList", method = RequestMethod.GET)
-    public List<PublishNoticeSuccessAndLoseVO> getPublishNoticeSuccessAndLoseList(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
-        return publishNoticeService.getPublishNoticeSuccessAndLoseList(publishDate, noticeGenerationDate.replaceAll(" ", "','"));
+    @RequestMapping("/oneKeyFix")
+    public RestResult oneKeyFix(@RequestParam(value = "requestID", required = true) String requestID,
+                                @RequestParam(value = "status", required = true) String status) throws Exception {
+        publishDataMapService.fixDistribution(requestID, status);
+        return RestResultGenerator.genSuccessResult(null);
     }
 
-    /**
-     * 一键修改公布公布及发送失败的数据
-     * @param publishDate
-     * @param noticeGenerationDate
-     * @return
-     */
-    @RequestMapping(value = "/api/oneKeyRepairPublishNotice", method = RequestMethod.POST)
-    public PublishNoticeRepairResultVO oneKeyRepairPublishNotice(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
-        return publishNoticeService.oneKeyRepairPublishNotice(publishDate, noticeGenerationDate.replaceAll(" ", "','"));
+
+    /*******************************************************************************************************************
+     * 2 以下为【公布校验池】功能区
+     ******************************************************************************************************************/
+    @Autowired
+    PublishCheckErrorFixService publishCheckPoolErrorService;
+
+    @RequestMapping(value = "/listPublishCheckPoolErrorGroup", method = RequestMethod.GET)
+    public RestResult<List<ErrorCountVO>> listPublishCheckPoolErrorGroup() {
+        return RestResultGenerator.genSuccessResult(
+                publishCheckPoolErrorService.listErrorGroup());
     }
 
-    @RequestMapping(value = "/api/getPublishNoticeLoseXls", method = RequestMethod.GET)
-    public void getPublishNoticeLoseXls(@RequestParam(value = "publishDate", required = true) String publishDate, HttpServletResponse httpServletResponse) {
-        publishNoticeService.getPublishNoticeLoseXls(publishDate, httpServletResponse);
+    @RequestMapping(value = "/fixError", method = RequestMethod.GET)
+    public RestResult<ErrorFixResultVO> fixError(@RequestParam(value = "error", required = true) String error,
+                                                 @RequestParam(value = "status", required = true) int status) {
+        return RestResultGenerator.genSuccessResult(publishCheckPoolErrorService.fixDistribution(error, status));
     }
+
+
+    /*******************************************************************************************************************
+     * 3 以下为【公布待审核】功能区
+     ******************************************************************************************************************/
+    @Autowired
+    PublishMonitorFixService publishMonitorFixService;
+
+    @RequestMapping(value = "/batchFixCheckSuccess", method = RequestMethod.GET)
+    public RestResult<ErrorFixResultVO> batchFixCheckSuccess() {
+        return RestResultGenerator.genSuccessResult(publishMonitorFixService.batchFixCheckSuccess());
+    }
+
+
+    /*******************************************************************************************************************
+     * 4 以下为【公布池异常】功能区
+     ******************************************************************************************************************/
+
+
+
+
 }

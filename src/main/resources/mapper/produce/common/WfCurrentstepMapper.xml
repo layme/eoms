@@ -15,18 +15,20 @@
         <result column="previous_id" property="previous_id" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="WfCurrentstepResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_BZGG_BFZSB
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="WfCurrentstepResultMap" parameterType="java.lang.String">
+        SELECT ID, ENTRY_ID, STEP_ID, ACTION_ID, OWNER, START_DATE, FINISH_DATE, DUE_DATE, STATUS, CALLER, PREVIOUS_ID
+          FROM WF_CURRENTSTEP P
+         WHERE P.ENTRY_ID IN
+               (SELECT Y.ID FROM WF_WFENTRY Y WHERE Y.MAIN_ID = #{requestID}
+        )
     </select>
 
     <delete id="deleteByRequestIdListAndName">
         DELETE FROM WF_CURRENTSTEP P
          WHERE P.ENTRY_ID IN
                (SELECT Y.ID FROM WF_WFENTRY Y WHERE Y.NAME = #{name} AND Y.MAIN_ID IN
-                <foreach collection="list" item="shenqingh" index="index" open="(" separator="," close=")">
-                    #{shenqingh}
+                <foreach collection="list" item="requestID" index="index" open="(" separator="," close=")">
+                    #{requestID}
                 </foreach>
                 )
     </delete>
@@ -51,5 +53,14 @@
             #{shenqingh}
         </foreach>
     </insert>
+
+    <update id="updateStepIDAndStatusByRequestAndName" parameterType="java.lang.String">
+        UPDATE WF_CURRENTSTEP A
+           SET A.STEP_ID = #{stepID}, A.STATUS = #{status}
+         WHERE A.ENTRY_ID IN (SELECT Y.ID
+                                FROM WF_WFENTRY Y
+                               WHERE Y.MAIN_ID = #{requestID}
+                                 AND Y.NAME = #{name})
+    </update>
 
 </mapper>

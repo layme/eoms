@@ -1,5 +1,6 @@
 package com.gwssi.eoms.dao.produce.gongbu;
 
+import com.gwssi.eoms.dao.produce.BaseDao;
 import com.gwssi.eoms.model.domain.produce.gongbu.FaFmgkJdb;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +17,17 @@ import java.util.List;
  */
 @Mapper
 @Component(value = "faFmgkJdbDao")
-public interface FaFmgkJdbDao {
-    List<FaFmgkJdb> getByRequestID(@Param("requestID") String requestID);
+public interface FaFmgkJdbDao extends BaseDao<FaFmgkJdb> {
+    /**
+     * 修改校对结论
+     * @param requestID
+     * @param conclusion
+     */
+    void updateConclusionByRequestID(@Param("requestID") String requestID, @Param("conclusion") String conclusion);
+
+    /**
+     * 从历史恢复数据
+     * @param requestID
+     */
+    void insertOneFrom_FAFMGKJDBLS_ByRequestID(@Param("requestID") String requestID);
 }

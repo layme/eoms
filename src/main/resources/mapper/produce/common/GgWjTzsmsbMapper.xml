@@ -40,10 +40,13 @@
         <result column="xmlwenjiancflj" property="xmlwenjiancflj" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="GgWjTzsmsbResultMap" parameterType="java.lang.String">
-        select *
-        from fa_bzgg_bfzsb
-        where shenqingh = #{requestID}
+    <select id="listByRequestID" resultMap="GgWjTzsmsbResultMap" parameterType="java.lang.String">
+        SELECT RID, ZHUTILX, YEWUZTBH, WEINEIBH, TONGZHISLX, TONGZHISSCRQ, WENJIANCFLJ, TUXINGWJCFLJ, TONGZHISZWSMJID,
+               TONGZHISZWYS, TONGZHISFJSL, FAWENR, SHENCHAY, SHENCHABM, SHENCHACSDM, ZIXTDM, FAWENDYBM, DAILIJGDM,
+               SHOUJIANRJS, SHOUJIANRXM, SHOUJIANRDZ, SHOUJIANRYB, FAWENLX, FAWENXLH, TONGZHISZT, BENDIRSBJ, CHEJIANBJ,
+               REGNAME, REGTIME, MODNAME, MODTIME, DIANZISQSJRID, RUKUZT, SHUJUJRFS, FASONGR, XMLWENJIANCFLJ
+          FROM FA_BZGG_BFZSB
+         WHERE SHENQINGH = #{requestID}
     </select>
 
 </mapper>

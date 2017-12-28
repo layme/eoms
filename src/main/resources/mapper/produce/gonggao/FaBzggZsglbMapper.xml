@@ -51,10 +51,82 @@
         <result column="gongbaodtqwcsj" property="gongbaodtqwcsj" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaBzggZsglbResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_BZGG_ZSGLB
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaBzggZsglbResultMap" parameterType="java.lang.String">
+        SELECT FA_BZGG_ZSGLB_ID, SHENQINGH, ZHUANLILX, JUANQIH, GONGGAOR, BANDENGFWR, NIANDENGYFJNR, FENLEIWCBJ,
+               SHIFOUWTAJ, ZHUANZHENGC, JIAODUIZT, TIDANGCZY, CAOZUOSJ, ZHENGSHUH, FAZHENGR, ZHUANLIH, ZHENGSHUYSMJID,
+               ZHENGSHUYYS, WENJIANCFLJ, TUXINGWJCFLJ, ZHENGSHUYSCSJ, FAWENXLH, DAILIJGDM, SHOUJIANRXM, SHOUJIANRDZ,
+               SHOUJIANRYZBM, ZHENGSHUZT, SHENCHAYDM, SHENCHABM, SHENCHACSDM, BANZHENGQRSJ, REGNAME, REGTIME, MODNAME,
+               MODTIME, SHOUNIANND, FA_BZGG_GGAJZTJK_ID, SHENQINGR, GONGGAOZT, YUGUGGR, JINRUGGSJ, SHIFOUTGJY, SHUJUXGBJ,
+               ZHULUXMTQSJ, GONGBAODTQBJ, ZHULUXMTQBJ, GONGBAODTQWCSJ
+          FROM FA_BZGG_ZSGLB
+         WHERE SHENQINGH = #{requestID}
     </select>
+
+    <insert id="insertOneByRequestID" parameterType="java.lang.String">
+        INSERT INTO FA_BZGG_ZSGLB
+          SELECT S_FA_BZGG_ZSGLB.NEXTVAL,
+                 A1.SHENQINGH,
+                 A1.ZHUANLILX,
+                 NULL,
+                 A1.GONGGAOR,
+                 A1.BANDENGFWR,
+                 A1.NIANDENGYFJNR,
+                 A1.FENLEIWCBJ,
+                 NULL,
+                 '2',
+                 '2',
+                 NULL,
+                 A7.CAOZUOSJ,
+                 A7.ZHENGSHUH,
+                 '',
+                 A7.ZHUANLIH,
+                 NULL,
+                 NULL,
+                 A7.WENJIANCFLJ,
+                 NULL,
+                 A7.ZHENGSHUYSCSJ,
+                 A7.FAWENXLH,
+                 A7.DAILIJGDM,
+                 A7.SHOUJIANRXM,
+                 A7.SHOUJIANRDZ,
+                 A7.SHOUJIANRYZBM,
+                 '00',
+                 A7.SHENCHAYDM,
+                 A7.SHENCHABM,
+                 A7.SHENCHACSDM,
+                 A7.BANZHENGQRSJ,
+                 A1.REGNAME,
+                 A1.REGTIME,
+                 A1.MODNAME,
+                 A1.MODTIME,
+                 A7.SHOUNIANND,
+                 A1.FA_BZGG_GGAJZTJK_ID,
+                 A1.SHENQINGR,
+                 A1.GONGGAOZT,
+                 A1.YUGUGGR,
+                 A1.JINRUGGCSJ,
+                 '0',
+                 NULL,
+                 A3.ZHULUXMTQWCSJ,
+                 A3.GONGBAODTQBJ,
+                 A3.ZHULUXMTQBJ,
+                 A3.GONGBAODTQWCSJ
+            FROM FA_BZGG_GGAJZTJK A1
+            LEFT JOIN FA_BZGG_BFZSB A7
+              ON A1.SHENQINGH = A7.SHENQINGH
+            LEFT JOIN FA_BZGG_CBJYB_LS_2 A3
+              ON A1.SHENQINGH = A3.SHENQINGH
+           WHERE A1.SHENQINGH = #{requestID}
+    </insert>
+
+    <update id="updatePubStatusAndPubDateAndNoticeStatusByRequestID" parameterType="java.lang.String">
+        UPDATE FA_BZGG_ZSGLB B
+           SET B.GONGGAOZT = #{pubStatus}, B.GONGGAOR = #{pubDate}, B.ZHENGSHUZT = #{noticeStatus}
+         WHERE B.SHENQINGH = #{requestID}
+    </update>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_BZGG_ZSGLB WHERE SHENQINGH = #{requestID}
+    </delete>
 
 </mapper>

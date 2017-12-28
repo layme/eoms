@@ -20,9 +20,11 @@
         <result column="islunxun" property="islunxun" jdbcType="DOUBLE"/>
     </resultMap>
 
-        <select id="getByRequestID" resultMap="TBdListResultMap" parameterType="java.lang.String">
-            SELECT *
-            FROM T_PUB_LIST
+        <select id="listByRequestID" resultMap="TBdListResultMap" parameterType="java.lang.String">
+            SELECT PUBTYPE, AN, GBDSENDTIME, GBDGETTIME, ZLXMSENDTIME, ZLXMGETTIME, BDRESULT, ZLXMGETRESULT,
+                   GBDGETRESULT, ISFAST, BDDATE, SENDERNAME, ISTESTING, PFLAG, ISLUNXUN
+            FROM T_BD_LIST
             WHERE AN = #{requestID}
+            ORDER BY GBDGETTIME DESC
         </select>
 </mapper>

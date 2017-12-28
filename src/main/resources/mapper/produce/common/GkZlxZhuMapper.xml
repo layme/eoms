@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.GkZlxZhuDao">
+    <resultMap id="GkZlxZhuResultMap" type="com.gwssi.eoms.model.domain.produce.common.GkZlxZhu">
+        <result column="rid" property="rid" jdbcType="DOUBLE"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="zhuanlimc" property="zhuanlimc" jdbcType="VARCHAR"/>
+        <result column="zhuanlilx" property="zhuanlilx" jdbcType="VARCHAR"/>
+        <result column="pctbj" property="pctbj" jdbcType="VARCHAR"/>
+        <result column="shenqingr" property="shenqingr" jdbcType="VARCHAR"/>
+        <result column="fenantjr" property="fenantjr" jdbcType="VARCHAR"/>
+        <result column="shenqingrsl" property="shenqingrsl" jdbcType="DOUBLE"/>
+        <result column="famingrensl" property="famingrensl" jdbcType="DOUBLE"/>
+        <result column="fenleihbbh" property="fenleihbbh" jdbcType="VARCHAR"/>
+        <result column="zhufenlh" property="zhufenlh" jdbcType="VARCHAR"/>
+        <result column="dailibj" property="dailibj" jdbcType="VARCHAR"/>
+        <result column="fenanbj" property="fenanbj" jdbcType="VARCHAR"/>
+        <result column="weishengwbcbj" property="weishengwbcbj" jdbcType="VARCHAR"/>
+        <result column="xuliebbj" property="xuliebbj" jdbcType="VARCHAR"/>
+        <result column="youxianqqts" property="youxianqqts" jdbcType="DOUBLE"/>
+        <result column="zuixiaoyxqr" property="zuixiaoyxqr" jdbcType="VARCHAR"/>
+        <result column="tiqiangkr" property="tiqiangkr" jdbcType="VARCHAR"/>
+        <result column="faminggbr" property="faminggbr" jdbcType="VARCHAR"/>
+        <result column="gongkaiggr" property="gongkaiggr" jdbcType="VARCHAR"/>
+        <result column="shenchaymc" property="shenchaymc" jdbcType="VARCHAR"/>
+        <result column="zhuanlih" property="zhuanlih" jdbcType="VARCHAR"/>
+        <result column="dangqianbc" property="dangqianbc" jdbcType="VARCHAR"/>
+        <result column="juanqih" property="juanqih" jdbcType="VARCHAR"/>
+        <result column="gonggaolxdm" property="gonggaolxdm" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+        <result column="tongydfmczbj" property="tongydfmczbj" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listByRequestID" resultMap="GkZlxZhuResultMap" parameterType="java.lang.String">
+        SELECT RID, SHENQINGH, ZHUANLIMC, ZHUANLILX, PCTBJ, SHENQINGR, FENANTJR, SHENQINGRSL, FAMINGRENSL, FENLEIHBBH, ZHUFENLH, DAILIBJ, FENANBJ, WEISHENGWBCBJ, XULIEBBJ, YOUXIANQQTS, ZUIXIAOYXQR, TIQIANGKR, FAMINGGBR, GONGKAIGGR, SHENCHAYMC, ZHUANLIH, DANGQIANBC, JUANQIH, GONGGAOLXDM, REGNAME, REGTIME, MODNAME, MODTIME, TONGYDFMCZBJ
+          FROM GK_ZLX_ZHU
+         WHERE SHENQINGH = #{requestID}
+    </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM GK_ZLX_ZHU WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <delete id="deleteByRequestIDAndCode" parameterType="java.lang.String">
+        DELETE FROM GK_ZLX_ZHU WHERE GONGGAOLXDM = #{code} AND SHENQINGH = #{requestID}
+    </delete>
+</mapper>

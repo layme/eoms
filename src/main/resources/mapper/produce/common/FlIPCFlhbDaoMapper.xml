@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.FlIPCFlhbDao">
+    <select id="listSortVersionBySortNumList" resultType="java.lang.String" parameterType="java.util.List">
+        SELECT B.BANBENH FROM FL_IPCFLHB B WHERE B.FENLEIH IN
+        <foreach collection="list" index="index" item="sortNum" open="(" separator="," close=")">
+            #{sortNum}
+        </foreach>
+    </select>
+
+    <select id="getOneBySortNum" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT B.BANBENH FROM FL_IPCFLHB B WHERE B.FENLEIH = #{sortNum}
+    </select>
+</mapper>

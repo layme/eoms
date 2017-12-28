@@ -27,10 +27,16 @@
         <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaFmgkCbjybLsResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_FMGK_CBJYB_LS_2
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaFmgkCbjybLsResultMap" parameterType="java.lang.String">
+        SELECT FA_FMGK_CBJYB_LS_ID, FA_FMGK_GGAJZTJK_ID, SHENQINGR, SHENQINGH, ZHUFENLEIH, GONGGAOZT, YUGUGGR,
+               CANSHENHGFWR, JINRUJYCSJ, SONGFENLSJ, FENLEIWCSJ, FENLEIWCBJ, ZHULUXMTQBJ, ZHULUXMTQWCSJ, GONGBAODTQBJ,
+               GONGBAODTQWCSJ, JIAODUIJL, JIAODUIJGFHSJ, ZHUANLSSJ, REGNAME, REGTIME, MODNAME, MODTIME
+          FROM FA_FMGK_CBJYB_LS_2
+         WHERE SHENQINGH = #{requestID}
     </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM FA_FMGK_CBJYB_LS_2 WHERE SHENQINGH = #{requestID}
+    </delete>
 
 </mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.GgZlxFlhDao">
+    <resultMap id="GgZlxFlhResultMap" type="com.gwssi.eoms.model.domain.produce.common.GgZlxFlh">
+        <result column="uuid" property="uuid" jdbcType="DOUBLE"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="fenleihbbh" property="fenleihbbh" jdbcType="VARCHAR"/>
+        <result column="fenleih" property="fenleih" jdbcType="VARCHAR"/>
+        <result column="fjfenlh" property="fjfenlh" jdbcType="VARCHAR"/>
+        <result column="fujiaxxflh" property="fujiaxxflh" jdbcType="VARCHAR"/>
+        <result column="fenlhcsrq" property="fenlhcsrq" jdbcType="VARCHAR"/>
+        <result column="youxiaobj" property="youxiaobj" jdbcType="VARCHAR"/>
+        <result column="shenchaydm" property="shenchaydm" jdbcType="VARCHAR"/>
+        <result column="bumendm" property="bumendm" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+        <result column="fufenlh1" property="fufenlh1" jdbcType="VARCHAR"/>
+        <result column="fufenlh2" property="fufenlh2" jdbcType="VARCHAR"/>
+        <result column="fufenlh3" property="fufenlh3" jdbcType="VARCHAR"/>
+        <result column="fenleibz" property="fenleibz" jdbcType="VARCHAR"/>
+        <result column="laiyuanzxtdm" property="laiyuanzxtdm" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <resultMap id="SortInfoVOResultMap" type="com.gwssi.eoms.model.dto.SortInfoDTO">
+        <result column="shenqingh" property="requestID" jdbcType="VARCHAR"/>
+        <result column="fenleihbbh" property="sortVersion" jdbcType="VARCHAR"/>
+        <result column="fenleih" property="mainSortNum" jdbcType="VARCHAR"/>
+        <result column="fjfenlh" property="viceSortNum" jdbcType="VARCHAR"/>
+        <result column="fujiaxxflh" property="attachSortNum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listByRequestID" resultMap="GgZlxFlhResultMap" parameterType="java.lang.String">
+        SELECT UUID, SHENQINGH, FENLEIHBBH, FENLEIH, FJFENLH, FUJIAXXFLH, FENLHCSRQ, YOUXIAOBJ, SHENCHAYDM,
+               BUMENDM, REGNAME, REGTIME, MODNAME, MODTIME, FUFENLH1, FUFENLH2, FUFENLH3, FENLEIBZ, LAIYUANZXTDM
+          FROM GG_ZLX_FLH
+         WHERE SHENQINGH = #{requestID}
+    </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM GG_ZLX_FLH WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <select id="listSortNumByRequestIDList" resultMap="SortInfoVOResultMap" parameterType="java.util.List">
+        SELECT H.SHENQINGH, H.FENLEIHBBH, H.FENLEIH, H.FJFENLH, H.FUJIAXXFLH
+          FROM GG_ZLX_FLH H
+         WHERE H.YOUXIAOBJ = '1'
+           AND H.SHENQINGH IN
+         <foreach collection="list" index="index" item="requestID" open="(" separator="," close=")">
+             #{requestID}
+         </foreach>
+    </select>
+
+    <update id="updateViceAndAttachSortNumBySortInfoDTO" parameterType="com.gwssi.eoms.model.dto.SortInfoDTO">
+        UPDATE GG_ZLX_FLH H
+           SET H.FJFENLH = #{sortInfoDTO.viceSortNum, jdbcType = VARCHAR},
+               H.FUJIAXXFLH = #{sortInfoDTO.attachSortNum, jdbcType = VARCHAR},
+               H.FENLEIHBBH = #{sortInfoDTO.sortVersion, jdbcType = VARCHAR}
+         WHERE H.SHENQINGH = #{sortInfoDTO.requestID, jdbcType = VARCHAR} AND H.YOUXIAOBJ = '1'
+    </update>
+</mapper>

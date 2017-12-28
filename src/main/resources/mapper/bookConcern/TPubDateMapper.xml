@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.bookConcern.TPubDateDao">
+
+    <resultMap id="TPubDateResultMap" type="com.gwssi.eoms.model.domain.bookConcern.TPubDate">
+        <result column="pubdate" property="pubdate" jdbcType="VARCHAR"/>
+        <result column="isvalid" property="isvalid" jdbcType="DOUBLE"/>
+        <result column="readno" property="readno" jdbcType="DOUBLE"/>
+        <result column="readtime" property="readtime" jdbcType="VARCHAR"/>
+        <result column="rectime" property="rectime" jdbcType="VARCHAR"/>
+        <result column="rectype" property="rectype" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getPubDate" resultType="java.lang.String">
+        SELECT PUBDATE FROM T_PUBDATE WHERE ISVALID = '1' AND RECTYPE = 'GBGG'
+    </select>
+
+</mapper>

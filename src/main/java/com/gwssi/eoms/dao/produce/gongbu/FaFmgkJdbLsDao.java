@@ -1,5 +1,6 @@
 package com.gwssi.eoms.dao.produce.gongbu;
 
+import com.gwssi.eoms.dao.produce.BaseDao;
 import com.gwssi.eoms.model.domain.produce.gongbu.FaFmgkJdbLs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +17,4 @@ import java.util.List;
  */
 @Mapper
 @Component(value = "faFmgkJdbLsDao")
-public interface FaFmgkJdbLsDao {
-    List<FaFmgkJdbLs> getByRequestID(@Param("requestID") String requestID);
-}
+public interface FaFmgkJdbLsDao extends BaseDao<FaFmgkJdbLs> {}

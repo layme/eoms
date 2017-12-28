@@ -46,7 +46,7 @@ public class DbProConfig {
     }
 
     @Bean
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
+    public PlatformTransactionManager proTransactionManager() {
         return new DataSourceTransactionManager(dataSource);
     }
 }

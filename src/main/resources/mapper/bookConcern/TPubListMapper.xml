@@ -2,10 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gwssi.eoms.dao.bookConcern.TPubListDao">
     <resultMap id="TPubListResultMap" type="com.gwssi.eoms.model.domain.bookConcern.TPubList">
+        <result column="pubdate" property="pubdate" jdbcType="VARCHAR"/>
         <result column="pubtype" property="pubtype" jdbcType="VARCHAR"/>
         <result column="an" property="an" jdbcType="VARCHAR"/>
-        <result column="pubdate" property="pubdate" jdbcType="VARCHAR"/>
-        <result column="issingle" property="issingle" jdbcType="DOUBLE"/>
         <result column="zlxmmodify" property="zlxmmodify" jdbcType="DOUBLE"/>
         <result column="xmlmodify" property="xmlmodify" jdbcType="DOUBLE"/>
         <result column="predo" property="predo" jdbcType="DOUBLE"/>
@@ -17,20 +16,38 @@
         <result column="gbdgetresult" property="gbdgetresult" jdbcType="DOUBLE"/>
         <result column="sendername" property="sendername" jdbcType="VARCHAR"/>
         <result column="istesting" property="istesting" jdbcType="DOUBLE"/>
+        <result column="issingle" property="issingle" jdbcType="DOUBLE"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="TPubListResultMap" parameterType="java.lang.String">
-        SELECT *
+    <select id="listByRequestID" resultMap="TPubListResultMap" parameterType="java.lang.String">
+        SELECT PUBDATE, PUBTYPE, AN, ZLXMMODIFY, XMLMODIFY, PREDO, GBDSENDTIME, GBDGETTIME, ZLXMSENDTIME,
+               ZLXMGETTIME, ZLXMGETRESULT, GBDGETRESULT, SENDERNAME, ISTESTING, ISSINGLE
           FROM T_PUB_LIST
          WHERE AN = #{requestID}
+    </select>
+
+    <select id="getSQByRequestID" resultMap="TPubListResultMap" parameterType="java.lang.String">
+        SELECT PUBDATE, PUBTYPE, AN, ZLXMMODIFY, XMLMODIFY, PREDO, GBDSENDTIME, GBDGETTIME, ZLXMSENDTIME,
+               ZLXMGETTIME, ZLXMGETRESULT, GBDGETRESULT, SENDERNAME, ISTESTING, ISSINGLE
+        FROM T_PUB_LIST
+        WHERE PUBTYPE IN ('FMSQ','XXSQ','WGSQ')
+          AND AN = #{requestID}
+    </select>
+
+    <select id="getGBByRequestID" resultMap="TPubListResultMap" parameterType="java.lang.String">
+        SELECT PUBDATE, PUBTYPE, AN, ZLXMMODIFY, XMLMODIFY, PREDO, GBDSENDTIME, GBDGETTIME, ZLXMSENDTIME,
+               ZLXMGETTIME, ZLXMGETRESULT, GBDGETRESULT, SENDERNAME, ISTESTING, ISSINGLE
+        FROM T_PUB_LIST
+        WHERE PUBTYPE = 'FMGB'
+        AND AN = #{requestID}
     </select>
 
     <select id="getBookConcernHaveData" resultType="java.lang.String" parameterType="java.util.List">
         SELECT T.AN
           FROM T_PUB_LIST T
          WHERE T.AN IN
-         <foreach collection="list" index="index" item="shenqingh" open="(" separator="," close=")">
-             #{shenqingh}
+         <foreach collection="list" index="index" item="requestID" open="(" separator="," close=")">
+             #{requestID}
          </foreach>
     </select>
 </mapper>

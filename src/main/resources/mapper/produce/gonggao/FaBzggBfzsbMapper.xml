@@ -42,10 +42,14 @@
         <result column="shouquanr" property="shouquanr" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="FaBzggBfzsbResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_BZGG_BFZSB
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="FaBzggBfzsbResultMap" parameterType="java.lang.String">
+        SELECT FA_BZGG_BFZSB_ID, SHENQINGH, ZHUANLILX, JUANQIH, GONGGAOR, BANDENGFWR, NIANDENGYFJNR,
+               FENLEIWCBJ, SHIFOUWTAJ, ZHUANZHENGC, JIAODUIZT, TIDANGCZY, CAOZUOSJ, ZHENGSHUH, FAZHENGR,
+               ZHUANLIH, ZHENGSHUYSMJID, ZHENGSHUYYS, WENJIANCFLJ, TUXINGWJCFLJ, ZHENGSHUYSCSJ, FAWENXLH,
+               DAILIJGDM, SHOUJIANRXM, SHOUJIANRDZ, SHOUJIANRYZBM, ZHENGSHUZT, SHENCHAYDM, SHENCHABM,
+               SHENCHACSDM, BANZHENGQRSJ, REGNAME, REGTIME, MODNAME, MODTIME, RUKUZT, SHOUNIANND, SHOUQUANR
+          FROM FA_BZGG_BFZSB
+         WHERE SHENQINGH = #{requestID}
     </select>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.gwssi.eoms.dao.produce.gonggao;
 
+import com.gwssi.eoms.dao.produce.BaseDao;
 import com.gwssi.eoms.model.domain.produce.gonggao.FaBzggDggajb;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,14 +13,7 @@ import java.util.List;
  */
 @Mapper
 @Component(value = "faBzggDggajbDao")
-public interface FaBzggDggajbDao {
-    /**
-     * 获取单条记录
-     * @param requestID
-     * @return
-     */
-    List<FaBzggDggajb> getByRequestID(@Param("requestID") String requestID);
-
+public interface FaBzggDggajbDao extends BaseDao<FaBzggDggajb> {
     /**
      * 获取公告待审核异常总数
      * @return
@@ -27,14 +21,14 @@ public interface FaBzggDggajbDao {
     Integer getAnnouncementWaitAuditCount();
 
     /**
-     * 根据申请号删除案件
-     * @param requestID
-     */
-    void deleteByRequestID(@Param("requestID") String requestID);
-
-    /**
      * 根据申请号插入单条数据
      * @param requestID
      */
     void insertOneByRequestID(@Param("requestID") String requestID);
+
+    /**
+     * 根据申请号修改公告状态
+     * @param requestID
+     */
+    void updatePubStatusByRequestID(@Param("requestID") String requestID, @Param("pubStatus") String pubStatus);
 }

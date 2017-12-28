@@ -11,18 +11,18 @@
         <result column="main_id" property="main_id" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getByRequestID" resultMap="WfWfentryResultMap" parameterType="java.lang.String">
-        SELECT *
-        FROM FA_BZGG_BFZSB
-        WHERE SHENQINGH = #{requestID}
+    <select id="listByRequestID" resultMap="WfWfentryResultMap" parameterType="java.lang.String">
+        SELECT ID, 'NAME, STATE, PARENT_ID, SUB_WORKFLOW_ID, INSTANCE_ID, MAIN_ID
+          FROM WF_WFENTRY
+         WHERE SHENQINGH = #{requestID}
     </select>
 
     <delete id="deleteByRequestIdListAndName">
         DELETE FROM WF_WFENTRY Y
          WHERE Y.NAME = #{name}
            AND Y.MAIN_ID IN
-           <foreach collection="list" item="shenqingh" index="index" open="(" separator="," close=")">
-               #{shenqingh}
+           <foreach collection="list" item="requestID" index="index" open="(" separator="," close=")">
+               #{requestID}
            </foreach>
     </delete>
     

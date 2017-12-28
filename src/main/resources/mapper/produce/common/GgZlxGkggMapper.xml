@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwssi.eoms.dao.produce.common.GgZlxGkggDao">
+    <resultMap id="GgZlxGkggResultMap" type="com.gwssi.eoms.model.domain.produce.common.GgZlxGkgg">
+        <result column="rid" property="rid" jdbcType="DOUBLE"/>
+        <result column="shenqingh" property="shenqingh" jdbcType="VARCHAR"/>
+        <result column="gongkaigglx" property="gongkaigglx" jdbcType="VARCHAR"/>
+        <result column="juanqih" property="juanqih" jdbcType="VARCHAR"/>
+        <result column="gonggaoh" property="gonggaoh" jdbcType="VARCHAR"/>
+        <result column="gonggaor" property="gonggaor" jdbcType="VARCHAR"/>
+        <result column="gonggaowcbj" property="gonggaowcbj" jdbcType="VARCHAR"/>
+        <result column="regname" property="regname" jdbcType="VARCHAR"/>
+        <result column="regtime" property="regtime" jdbcType="VARCHAR"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="modtime" property="modtime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listByRequestID" resultMap="GgZlxGkggResultMap" parameterType="java.lang.String">
+        SELECT RID, SHENQINGH, GONGKAIGGLX, JUANQIH, GONGGAOH, GONGGAOR, GONGGAOWCBJ, REGNAME, REGTIME, MODNAME, MODTIME
+          FROM GG_ZLX_GKGG
+         WHERE SHENQINGH = #{requestID}
+    </select>
+
+    <delete id="deleteByRequestID" parameterType="java.lang.String">
+        DELETE FROM GG_ZLX_GKGG WHERE SHENQINGH = #{requestID}
+    </delete>
+
+    <delete id="deleteByRequestIDAndCode" parameterType="java.lang.String">
+        DELETE FROM GG_ZLX_GKGG WHERE GONGKAIGGLX = #{code} AND SHENQINGH = #{requestID}
+    </delete>
+</mapper>
