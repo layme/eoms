@@ -52,10 +52,8 @@ public class MonitorDataServiceImpl implements MonitorDataService {
      * 定时获取公告的监控数据，并存入缓存
      */
     @Override
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 2)
+//    @Scheduled(fixedRate = 1000 * 60 * 60 * 2)
     public void getAnnouncementMonitorData() {
-        log.debug("=> 定时任务【getAnnouncementMonitorData】开始运行");
-
         AnnouncementMonitorDataVO announcementMonitorDataVO = (AnnouncementMonitorDataVO) CachePool.getValue("announcementMonitorDataVO");
 
         if (null == announcementMonitorDataVO) {
@@ -86,18 +84,14 @@ public class MonitorDataServiceImpl implements MonitorDataService {
             announcementMonitorDataVO.setWaitAnnouncement(faBzggGgajztjkDao.getWaitAnnouncementCount());
             announcementMonitorDataVO.setPostOfficeHaveAnnouncementData(fwZlzsFwxxDao.getPostOfficeHaveAnnouncementDataCount("20171001"));
         }
-
-        log.debug("=> 定时任务【getAnnouncementMonitorData】运行结束");
     }
 
     /**
      * 定时获取公布的监控数据，并存入缓存
      */
     @Override
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 2)
+//    @Scheduled(fixedRate = 1000 * 60 * 60 * 2)
     public void getPublishMonitorData() {
-        log.debug("=> 定时任务【getPublishMonitorData】开始运行");
-
         PublishMonitorDataVO publishMonitorDataVO = (PublishMonitorDataVO) CachePool.getValue("publishMonitorDataVO");
 
         if (null == publishMonitorDataVO) {
@@ -129,7 +123,5 @@ public class MonitorDataServiceImpl implements MonitorDataService {
             publishMonitorDataVO.setAdvanceDatePassed(faFmgkGkajztjkDao.getAdvanceDatePassedCount());
             publishMonitorDataVO.setBookConcernHavePublishData(faFmgkGkajztjkDao.getBookConcernHavePubDataCount());
         }
-
-        log.debug("=> 定时任务【getPublishMonitorData】运行结束");
     }
 }
