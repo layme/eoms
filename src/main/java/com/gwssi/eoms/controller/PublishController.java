@@ -40,8 +40,14 @@ public class PublishController {
     }
 
     @RequestMapping("/oneKeyFix")
-    public RestResult oneKeyFix(@RequestParam(value = "requestID", required = true) String requestID,
-                                @RequestParam(value = "status", required = true) String status) throws Exception {
+    public RestResult oneKeyFix(@RequestParam(value = "requestID", required = false) String requestID,
+                                @RequestParam(value = "status", required = false) String status) throws Exception {
+        if (requestID == null) {
+            throw new IllegalArgumentException("申请号不能为空");
+        }
+        if (requestID.length() != 13) {
+            throw new IllegalArgumentException("申请号长度不对");
+        }
         publishDataMapService.fixDistribution(requestID, status);
         return RestResultGenerator.genSuccessResult(null);
     }
