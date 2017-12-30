@@ -21,7 +21,6 @@ public class RestExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)  // 501
     private <T> RestResult<T> runtimeExceptionHandler(RuntimeException e) {
-        log.error("--> Meet a runtimeException: ", e);
         return RestResultGenerator.genErrorResult(e.getMessage());
     }
 
@@ -29,7 +28,6 @@ public class RestExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)  // 409
     private <T> RestResult<T> ioExceptionHandler(IOException e) {
-        log.error("--> Meet an ioException: " + e);
         return RestResultGenerator.genErrorResult(e.getMessage());
     }
 
@@ -37,7 +35,6 @@ public class RestExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.REQUEST_TIMEOUT)  // 408
     private <T> RestResult<T> sqlExceptionHandler(IOException e) {
-        log.error("--> Meet a sqlException: " + e);
         return RestResultGenerator.genErrorResult(e.getMessage());
     }
 }
