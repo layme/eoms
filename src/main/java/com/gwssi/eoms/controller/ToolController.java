@@ -39,7 +39,7 @@ public class ToolController {
      * @return
      */
     @RequestMapping(value = "/getPublishNoticeData", method = RequestMethod.GET)
-    public RestResult<PublishNoticeDataVO> getPublishNoticeData(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
+    public RestResult<PublishNoticeDataVO> getPublishNoticeData(@RequestParam(value = "publishDate", required = false) String publishDate, @RequestParam(value = "noticeGenerationDate", required = false) String noticeGenerationDate) {
         return RestResultGenerator.genSuccessResult(
                 publishNoticeService.getPublishNoticeData(publishDate, LocalUtils.stringToList(noticeGenerationDate, " ")));
     }
@@ -51,7 +51,7 @@ public class ToolController {
      * @return
      */
     @RequestMapping(value = "/getPublishNoticeSuccessAndLoseList", method = RequestMethod.GET)
-    public RestResult<List<PublishNoticeSuccessAndLoseVO>> getPublishNoticeSuccessAndLoseList(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
+    public RestResult<List<PublishNoticeSuccessAndLoseVO>> getPublishNoticeSuccessAndLoseList(@RequestParam(value = "publishDate", required = false) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
         return RestResultGenerator.genSuccessResult(
                 publishNoticeService.getPublishNoticeSuccessAndLoseList(publishDate, LocalUtils.stringToList(noticeGenerationDate, " ")));
     }
@@ -63,7 +63,7 @@ public class ToolController {
      * @return
      */
     @RequestMapping(value = "/oneKeyRepairPublishNotice", method = RequestMethod.GET)
-    public RestResult<PublishNoticeRepairResultVO> oneKeyRepairPublishNotice(@RequestParam(value = "publishDate", required = true) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
+    public RestResult<PublishNoticeRepairResultVO> oneKeyRepairPublishNotice(@RequestParam(value = "publishDate", required = false) String publishDate, @RequestParam(value = "noticeGenerationDate", required = true) String noticeGenerationDate) {
         return RestResultGenerator.genSuccessResult(
                 publishNoticeService.oneKeyRepairPublishNotice(publishDate, LocalUtils.stringToList(noticeGenerationDate, " ")));
     }
@@ -74,7 +74,7 @@ public class ToolController {
      * @param httpServletResponse
      */
     @RequestMapping(value = "/getPublishNoticeLoseXls", method = RequestMethod.GET)
-    public void getPublishNoticeLoseXls(@RequestParam(value = "publishDate", required = true) String publishDate, HttpServletResponse httpServletResponse) {
+    public void getPublishNoticeLoseXls(@RequestParam(value = "publishDate", required = false) String publishDate, HttpServletResponse httpServletResponse) {
         publishNoticeService.getPublishNoticeLoseXls(publishDate, httpServletResponse);
     }
 }

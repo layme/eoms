@@ -18,10 +18,12 @@ public interface FaBzggGgajztjkDao extends BaseDao<FaBzggGgajztjk> {
      * 修改案件状态
      * @param requestID
      * @param status
+     * @param conclusion
      * @param pubDate
      */
     void updateStatusAndPubDateByRequestID(@Param("requestID") String requestID,
                                            @Param("status") String status,
+                                           @Param("conclusion") String conclusion,
                                            @Param("pubDate") String pubDate);
 
     /**

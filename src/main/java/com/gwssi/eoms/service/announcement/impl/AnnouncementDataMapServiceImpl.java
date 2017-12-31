@@ -59,7 +59,7 @@ public class AnnouncementDataMapServiceImpl implements AnnouncementDataMapServic
                 announcementDataFixService.updateStatus_10(requestID);  // 修改状态为10 -公告数据已提取
                 break;
             case "20":
-                announcementDataFixService.updateStatus_10(requestID);  // 修改状态为20 -等年登印费
+                announcementDataFixService.updateStatus_20(requestID);  // 修改状态为20 -等年登印费
                 break;
             default:
                 throw new IllegalArgumentException("未知的目标公告状态");

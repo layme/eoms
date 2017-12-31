@@ -37,4 +37,11 @@ public class RestExceptionHandler {
     private <T> RestResult<T> sqlExceptionHandler(IOException e) {
         return RestResultGenerator.genErrorResult(e.getMessage());
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)  // 404
+    private <T> RestResult<T> exceptionHandler(IOException e) {
+        return RestResultGenerator.genErrorResult(e.getMessage());
+    }
 }

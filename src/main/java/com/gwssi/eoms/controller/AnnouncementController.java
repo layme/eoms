@@ -25,15 +25,15 @@ public class AnnouncementController {
     private AnnouncementDataMapService announcementDataMapService;
 
     @RequestMapping(value = "/getAnnouncementDataMap", method = RequestMethod.GET)
-    public RestResult<AnnouncementDataMapVO> getAnnouncementDataMap(@RequestParam(value = "requestID", required = true) String requestID) {
+    public RestResult<AnnouncementDataMapVO> getAnnouncementDataMap(@RequestParam(value = "requestID", required = false) String requestID) {
         return RestResultGenerator.genSuccessResult(
                 announcementDataMapService.getDataMapByRequestID(requestID)
         );
     }
 
     @RequestMapping(value = "/oneKeyFix", method = RequestMethod.GET)
-    public RestResult oneKeyFix(@RequestParam(value = "requestID", required = true) String requestID,
-                                @RequestParam(value = "status", required = true) String status) throws Exception {
+    public RestResult oneKeyFix(@RequestParam(value = "requestID", required = false) String requestID,
+                                @RequestParam(value = "status", required = false) String status) throws Exception {
         announcementDataMapService.fixDistribution(requestID, status);
         return RestResultGenerator.genSuccessResult(null);
     }

@@ -107,7 +107,7 @@ public class AnnouncementDataFixServiceImpl implements AnnouncementDataFixServic
 
         // 修改监控表数据
         if (this.announcementDataMapVO.getFaBzggGgajztjk().size() > 0) {
-            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "6", "");
+            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "6", "1", "");
         } else {
             throw new DataMissingException("监控表无记录");
         }
@@ -145,7 +145,7 @@ public class AnnouncementDataFixServiceImpl implements AnnouncementDataFixServic
 
         // 修改监控表数据
         if (this.announcementDataMapVO.getFaBzggGgajztjk().size() > 0) {
-            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "8", "");
+            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "8", "1", "");
         } else {
             throw new DataMissingException("监控表无记录");
         }
@@ -199,7 +199,7 @@ public class AnnouncementDataFixServiceImpl implements AnnouncementDataFixServic
 
         // 修改监控表数据
         if (this.announcementDataMapVO.getFaBzggGgajztjk().size() > 0) {
-            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "9", tPubDateDao.getPubDate());
+            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "9", "1", tPubDateDao.getPubDate());
         } else {
             throw new DataMissingException("监控表无记录");
         }
@@ -254,7 +254,7 @@ public class AnnouncementDataFixServiceImpl implements AnnouncementDataFixServic
 
         // 修改监控表数据
         if (this.announcementDataMapVO.getFaBzggGgajztjk().size() > 0) {
-            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "10",
+            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "10", "1",
                     this.announcementDataMapVO.getTPubList().get(0).getPubdate());
         } else {
             throw new DataMissingException("监控表无记录");
@@ -298,7 +298,7 @@ public class AnnouncementDataFixServiceImpl implements AnnouncementDataFixServic
 
         // 修改监控表数据
         if (this.announcementDataMapVO.getFaBzggGgajztjk().size() > 0) {
-            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "20", "");
+            faBzggGgajztjkDao.updateStatusAndPubDateByRequestID(requestId, "20", "1", "");
         } else {
             throw new DataMissingException("监控表无记录");
         }

@@ -35,7 +35,6 @@ public class PublishMonitorFixServiceImpl implements PublishMonitorFixService {
 
     @Override
     public ErrorFixResultVO batchFixCheckSuccess() {
-        log.debug("清理任务【batchFixCheckSuccess】开始运行");
         int failureCount = 0;
         List<String> requestIDs = faFmgkCwajclbDao.listPublishCheckNotPassCountByError("校验成功错误");
         if (!CollectionUtils.isEmpty(requestIDs)) {
@@ -45,11 +44,11 @@ public class PublishMonitorFixServiceImpl implements PublishMonitorFixService {
                     publishDataFixService.updateStatus_20(requestID);  // 修改状态为20
                 } catch (RuntimeException e) {
                     failureCount++;
+                    log.error("批量处理【校验成功错误】发生异常 | requestID = " + requestID + " | " + e);
                 }
             }
             monitorDataUpdateService.updatePublishCheckSuccess();  // 更新公布校验成功错误数量
         }
-        log.debug("清理任务【batchFixCheckSuccess】运行结束");
         return new ErrorFixResultVO(requestIDs.size() - failureCount, failureCount, "处理结束");
     }
 

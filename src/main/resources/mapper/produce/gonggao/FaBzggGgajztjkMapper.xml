@@ -42,7 +42,7 @@
 
     <update id="updateStatusAndPubDateByRequestID" parameterType="java.lang.String">
         UPDATE FA_BZGG_GGAJZTJK JK
-           SET JK.GONGGAOZT = #{status}, JK.GONGGAOR = #{pubDate}
+           SET JK.GONGGAOZT = #{status}, JK.JIAOYANWCBJ = #{conclusion}, JK.GONGGAOR = #{pubDate}
          WHERE JK.SHENQINGH = #{requestID}
     </update>
 

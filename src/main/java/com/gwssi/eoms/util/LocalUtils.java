@@ -1,9 +1,6 @@
 package com.gwssi.eoms.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,11 +12,12 @@ import java.util.TreeSet;
 public class LocalUtils {
     /**
      * String转List
+     *
      * @param param
      * @param regex
      * @return
      */
-    public static List<String> stringToList (String param, String regex) {
+    public static List<String> stringToList(String param, String regex) {
         List<String> list = new ArrayList<>(4);
         if (param.contains(" ")) {
             String[] arr = param.split(regex);
@@ -34,6 +32,7 @@ public class LocalUtils {
 
     /**
      * 字符串去重
+     *
      * @param sortNum
      * @return
      */
@@ -54,5 +53,22 @@ public class LocalUtils {
                 return set.toString().replaceAll("\\[|\\]", "");
             }
         }
+    }
+
+    //生成随机数字和字母
+    public static String getStringRandom(int length) {
+        StringBuilder sb = new StringBuilder(length);
+        Random random = new Random();
+
+        //参数length，表示生成几位随机数
+        for (int i = 0; i < length; i++) {
+            if (random.nextInt(2) % 2 == 0) {
+                //输出是大写字母
+                sb.append((char) (random.nextInt(26) + 65));
+            } else {
+                sb.append(String.valueOf(random.nextInt(10)));
+            }
+        }
+        return sb.toString();
     }
 }

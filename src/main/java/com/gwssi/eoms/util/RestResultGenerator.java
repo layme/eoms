@@ -24,7 +24,6 @@ public class RestResultGenerator {
         restResult.setResult(result);
         restResult.setData(data);
         restResult.setMessage(message);
-        log.debug("generate rest result: {}", restResult);
         return restResult;
     }
 

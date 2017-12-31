@@ -33,7 +33,7 @@ public class PublishController {
     PublishDataMapService publishDataMapService;
 
     @RequestMapping("/getPublishDataMap")
-    public RestResult<PublishDataMapVO> getPublishDataMap(@RequestParam(value = "requestID", required = true) String requestID) {
+    public RestResult<PublishDataMapVO> getPublishDataMap(@RequestParam(value = "requestID", required = false) String requestID) {
         return RestResultGenerator.genSuccessResult(
                 publishDataMapService.getDataMapByRequestID(requestID)
         );
@@ -66,8 +66,8 @@ public class PublishController {
     }
 
     @RequestMapping(value = "/fixError", method = RequestMethod.GET)
-    public RestResult<ErrorFixResultVO> fixError(@RequestParam(value = "error", required = true) String error,
-                                                 @RequestParam(value = "status", required = true) int status) {
+    public RestResult<ErrorFixResultVO> fixError(@RequestParam(value = "error", required = false) String error,
+                                                 @RequestParam(value = "status", required = false) int status) {
         return RestResultGenerator.genSuccessResult(publishCheckPoolErrorService.fixDistribution(error, status));
     }
 
